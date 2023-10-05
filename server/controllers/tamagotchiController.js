@@ -5,7 +5,7 @@ const Tamagotchi = require("../models/tamagotchiModel");
 // @route GET /tamagotchis
 // @access private
 const getTamagotchis = asyncHandler(async (req, res) => {
-  const tamagotchis = await Tamagotchi.find();
+  const tamagotchis = await Tamagotchi.find({ user_id: req.user.id });
   res.status(200).json(tamagotchis);
 });
 
@@ -17,6 +17,10 @@ const getTamagotchi = asyncHandler(async (req, res) => {
   if (!tamagotchi) {
     res.status(404);
     throw new Error("Could not find Tamagotchi");
+  }
+  if (tamagotchi.user_id.toString() !== req.user.id) {
+    res.status(403);
+    throw new Error("User is not the owner of this Tamagotchi");
   }
   res.status(200).json(tamagotchi);
 });
@@ -35,6 +39,7 @@ const createTamagotchi = asyncHandler(async (req, res) => {
   const tamagotchi = await Tamagotchi.create({
     name,
     habitat,
+    user_id: req.user.id,
   });
   res.status(201).json(tamagotchi);
 });
@@ -49,6 +54,10 @@ const updateTamagotchi = asyncHandler(async (req, res) => {
   if (!tamagotchi) {
     res.status(404);
     throw new Error("Tamagotchi not found");
+  }
+  if (tamagotchi.user_id.toString() !== req.user.id) {
+    res.status(403);
+    throw new Error("User is not the owner of this Tamagotchi");
   }
   const updatedTamagotchi = await Tamagotchi.findByIdAndUpdate(
     req.params.id,
@@ -68,6 +77,10 @@ const deleteTamagotchi = asyncHandler(async (req, res) => {
   if (!tamagotchi) {
     res.status(404);
     throw new Error("Tamagotchi not found");
+  }
+  if (tamagotchi.user_id.toString() !== req.user.id) {
+    res.status(403);
+    throw new Error("User is not the owner of this Tamagotchi");
   }
   await Tamagotchi.findByIdAndRemove(req.params.id);
   res.status(203).json(tamagotchi);
