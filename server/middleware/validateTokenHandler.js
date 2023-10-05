@@ -18,6 +18,9 @@ const validateToken = asyncHandler((req, res, next) => {
       res.status(401);
       throw new Error("User is not authorized or token is missing");
     }
+  } else {
+    res.status(401);
+    throw new Error("User is not authorized or token is missing");
   }
 });
 

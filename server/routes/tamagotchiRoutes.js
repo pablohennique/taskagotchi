@@ -7,7 +7,9 @@ const {
   updateTamagotchi,
   deleteTamagotchi,
 } = require("../controllers/tamagotchiController");
+const validateToken = require("../middleware/validateTokenHandler");
 
+router.use(validateToken);
 router.route("/").get(getTamagotchis).post(createTamagotchi);
 router
   .route("/:id")
