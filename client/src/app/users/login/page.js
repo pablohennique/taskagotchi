@@ -29,7 +29,7 @@ export default function UserLoginPage() {
     fetch(url, options)
       .then((res) => {
         if (res.ok) {
-          return res.json({ message: "User Authenticated" });
+          return res.json();
         } else {
           throw new Error("Login failed");
         }
