@@ -13,12 +13,14 @@ export default function Home() {
         <p>... otherwise they will die</p>
         <p>Also, give them lots of love</p>
       </div>
-      <Link className={styles.button} href="/tamagotchis/create">
-        CREATE A TAMAGOTCHI
-      </Link>
-      <Link className={styles.button} href="/tasks/create">
-        CREATE A DAILY TASK
-      </Link>
+      <div className={styles.buttonContainer}>
+        <Link className={styles.button} href="/tamagotchis/create">
+          CREATE TAMAGOTCHI
+        </Link>
+        <Link className={styles.button} href="/tasks/create">
+          CREATE DAILY TASK
+        </Link>
+      </div>
     </>
   );
 }
