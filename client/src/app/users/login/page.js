@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { loginFetchCall } from "@/lib/backend";
 
 export default function UserLoginPage() {
   const [email, setEmail] = useState("");
@@ -17,30 +18,7 @@ export default function UserLoginPage() {
   const handleSubmit = (event) => {
     event.preventDefault();
     const url = "http://localhost:8000/users/login";
-    const requestBody = JSON.stringify({ email, password });
-    const options = {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: requestBody,
-    };
-
-    fetch(url, options)
-      .then((res) => {
-        if (res.ok) {
-          return res.json();
-        } else {
-          throw new Error("Login failed");
-        }
-      })
-      .then((data) => {
-        sessionStorage.setItem("accessToken", data.accessToken);
-        console.log("Login successful. Access Token:", data.accessToken);
-      })
-      .catch((error) => {
-        console.error("An error occurred during login:", error);
-      });
+    loginFetchCall(url, email, password);
   };
 
   return (

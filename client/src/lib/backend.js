@@ -1,15 +1,14 @@
 import { useEffect, useState } from "react";
 
-export function useBackendFetchCall(key, initialValue) {
+export function useBackendFetchCall(key, initialValue, url) {
   const [value, setValue] = useState(initialValue);
 
   useEffect(() => {
-    const url = "http://localhost:8000/tamagotchis";
     const options = {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${sessionStorage.getItem("accessToken")}`,
+        Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
       },
     };
 
@@ -31,4 +30,31 @@ export function useBackendFetchCall(key, initialValue) {
   }, []);
 
   return [value, setValue];
+}
+
+export function loginFetchCall(url, email, password) {
+  const requestBody = JSON.stringify({ email, password });
+  const options = {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: requestBody,
+  };
+
+  fetch(url, options)
+    .then((res) => {
+      if (res.ok) {
+        return res.json();
+      } else {
+        throw new Error("Login failed");
+      }
+    })
+    .then((data) => {
+      localStorage.setItem("accessToken", data.accessToken);
+      console.log("Login successful. Access Token:", data.accessToken);
+    })
+    .catch((error) => {
+      console.error("An error occurred during login:", error);
+    });
 }

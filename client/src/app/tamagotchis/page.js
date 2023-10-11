@@ -5,7 +5,12 @@ import TamagotchiList from "../../components/tamagotchis-list";
 
 export default function TamagotchisPage() {
   // const [tamagotchis, setTamagotchis] = useState([]);
-  const [tamagotchis, setTamagotchis] = useBackendFetchCall("tamagotchis", []);
+  const url = "http://localhost:8000/tamagotchis";
+  const [tamagotchis, setTamagotchis] = useBackendFetchCall(
+    "tamagotchis",
+    [],
+    url
+  );
 
   return (
     <>
