@@ -1,0 +1,23 @@
+.rootLayout {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.rootLayout > main {
+  padding: 35px 128px;
+  flex: 1;
+  background-color: #f8fafc;
+  /* width: 100%; */
+  /* display: flex; */
+  /* flex-direction: column; */
+  /* align-items: center; */
+}
+
+.rootLayout > footer {
+  display: flex;
+  justify-content: center;
+  border-top: 0.5px solid lightgray;
+  padding: 12px;
+}

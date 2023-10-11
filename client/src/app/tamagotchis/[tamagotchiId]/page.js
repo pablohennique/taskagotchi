@@ -21,6 +21,7 @@ export default function TamagotchiPage({ params }) {
       <h3>Habitat: {tamagotchi.habitat}</h3>
       <h3>Age: {tamagotchi.age}</h3>
       <h3>Hunger: {hungerDescription}</h3>
+      {/* evolution stage will be showed in the image and will be calculated in Node */}
     </>
   );
 }
