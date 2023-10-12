@@ -38,12 +38,12 @@ export default function CreateTamagotchi() {
         </div>
         <div>
           <label htmlFor="breed">Breed:</label>
-          <input
-            type="breed"
-            id="breed"
-            value={breed}
-            onChange={handleBreedChange}
-          />
+          <select id="breed" value={breed} onChange={handleBreedChange}>
+            <option value="">Select a breeed</option>
+            <option value="Dragon">Dragon</option>
+            <option value="Dog">Dog</option>
+            <option value="Cat">Cat</option>
+          </select>
         </div>
         <button type="submit">Create</button>
       </form>
