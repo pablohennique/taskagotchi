@@ -14,12 +14,8 @@ export default function Home() {
         <p>Also, give them lots of love</p>
       </div>
       <div className={styles.buttonContainer}>
-        <Link className={styles.button} href="/tamagotchis/create">
-          CREATE TAMAGOTCHI
-        </Link>
-        <Link className={styles.button} href="/tasks/create">
-          CREATE DAILY TASK
-        </Link>
+        <Link href="/tamagotchis/create">CREATE TAMAGOTCHI</Link>
+        <Link href="/tasks/create">CREATE DAILY TASK</Link>
       </div>
     </>
   );

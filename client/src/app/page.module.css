@@ -2,18 +2,17 @@
   display: flex;
 }
 
-.button {
+.buttonContainer a {
   text-decoration: none;
-  color: #f8f8f8;
-  background-color: rgb(55, 55, 55);
-  border: none;
+  color: #000000;
+  background-color: rgb(251, 251, 251);
+  border: solid;
   padding: 10px 20px;
   display: inline-block;
   margin: 4px 2px;
   cursor: pointer;
   border-radius: 10px;
   height: 30px;
-  display: flex;
   justify-content: center;
   text-align: center;
   align-items: center;

@@ -2,8 +2,10 @@
 
 import { useState } from "react";
 import { loginFetchCall } from "@/lib/backend";
+import { useRouter } from "next/navigation";
 
 export default function UserLoginPage() {
+  const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
@@ -19,6 +21,7 @@ export default function UserLoginPage() {
     event.preventDefault();
     const url = "http://localhost:8000/users/login";
     loginFetchCall(url, email, password);
+    router.push("/tamagotchis");
   };
 
   return (
