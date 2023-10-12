@@ -1,0 +1,8 @@
+.tamagotchiContainer {
+  display: flex;
+}
+
+.tamagotchiContainer img {
+  margin-left: 50px;
+  width: 200px;
+}

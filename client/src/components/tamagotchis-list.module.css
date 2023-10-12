@@ -1,0 +1,8 @@
+.list a {
+  text-decoration: none;
+  color: black;
+}
+
+.list a:hover {
+  color: grey;
+}
