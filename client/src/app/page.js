@@ -13,7 +13,7 @@ export default function Home() {
         <p>... otherwise they will die</p>
         <p>Also, give them lots of love</p>
       </div>
-      <div className={styles.buttonContainer}>
+      <div className="buttonContainer">
         <Link href="/tamagotchis/create">CREATE TAMAGOTCHI</Link>
         <Link href="/tasks/create">CREATE DAILY TASK</Link>
       </div>

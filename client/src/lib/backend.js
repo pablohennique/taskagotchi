@@ -58,3 +58,31 @@ export function loginFetchCall(url, email, password) {
       console.error("An error occurred during login:", error);
     });
 }
+
+export function createTamagotchiFetchCall(url, name, breed) {
+  const requestBody = JSON.stringify({ name, breed });
+  const options = {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+    },
+    body: requestBody,
+  };
+
+  fetch(url, options)
+    .then((res) => {
+      if (res.ok) {
+        return res.json();
+      } else {
+        throw new Error("Creation failed");
+      }
+    })
+    .then((data) => {
+      console.log(data);
+      console.log("Tamagotchi created successfully. Name:", data.name);
+    })
+    .catch((error) => {
+      console.error("An error occurred during Tamagotchi creation:", error);
+    });
+}

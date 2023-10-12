@@ -31,14 +31,14 @@ const getTamagotchi = asyncHandler(async (req, res) => {
 const createTamagotchi = asyncHandler(async (req, res) => {
   console.log(req.body);
 
-  const { name, habitat } = req.body;
-  if (!name || !habitat) {
+  const { name, breed } = req.body;
+  if (!name || !breed) {
     res.status(400);
     throw new Error("All fields are mandatory");
   }
   const tamagotchi = await Tamagotchi.create({
     name,
-    habitat,
+    breed,
     user_id: req.user.id,
   });
   res.status(201).json(tamagotchi);

@@ -1,7 +1,8 @@
 "use client";
-import React, { useState, useEffect } from "react";
 import { useBackendFetchCall } from "@/lib/backend";
 import TamagotchiList from "../../components/tamagotchis-list";
+import Link from "next/link";
+import styles from "./page.module.css";
 
 export default function TamagotchisPage() {
   // const [tamagotchis, setTamagotchis] = useState([]);
@@ -16,6 +17,9 @@ export default function TamagotchisPage() {
     <>
       <h1>My Tamagotchis</h1>
       <TamagotchiList tamagotchis={tamagotchis} />
+      <div className="buttonContainer">
+        <Link href="/tamagotchis/create">CREATE TAMAGOTCHI</Link>
+      </div>
     </>
   );
 }

@@ -11,12 +11,12 @@ const tamagotchiSchema = mongoose.Schema(
       type: String,
       required: [true, "Please add a name for your Tamagotchi"],
     },
-    habitat: {
+    breed: {
       type: String,
-      enum: ["Air", "Sea", "Land"],
+      enum: ["Dragon", "Cat", "Dog"],
       required: [
         true,
-        "Please choose a habitat of Tamagotchi - Air, Sea of Land",
+        "Please choose a breed of Tamagotchi - Air, Sea of Land",
       ],
     },
     age: {
