@@ -96,12 +96,36 @@ export async function deleteFetchCall(url) {
     if (!response.ok) {
       throw new Error("Delete failed");
     }
-    console.log("clicked!");
-    console.log(response);
+
     const data = await response.json();
-    console.log(data);
     console.log("Tamagotchi Deleted: ", data);
   } catch (error) {
     console.log("An error occurred while trying to delete Tamagotchi:", error);
+  }
+}
+
+export async function updateFetchCall(url, name) {
+  const requestBody = JSON.stringify({ name });
+
+  const options = {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+    },
+    body: requestBody,
+  };
+
+  try {
+    const response = await fetch(url, options);
+
+    if (!response.ok) {
+      throw new Error("Update failed");
+    }
+
+    const data = await response.json();
+    console.log("Tamagotchi Edited: ", data);
+  } catch (error) {
+    console.log("An error occurred while trying to update Tamagotchi:", error);
   }
 }

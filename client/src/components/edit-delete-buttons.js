@@ -1,11 +1,10 @@
-import { deleteFetchCall } from "@/lib/backend";
+import { deleteFetchCall, updateFetchCall } from "@/lib/backend";
 import { useRouter } from "next/navigation";
 
 export default function EditDeleteButtons(props) {
   const router = useRouter();
-  let tamagotchi = props.tamagotchi;
-  let params = props.params;
-  // console.log(paramsObject);
+
+  const { tamagotchi, params } = props;
   let tamagotchiNameUppercase;
 
   if (tamagotchi.name) {
@@ -23,15 +22,21 @@ export default function EditDeleteButtons(props) {
     }
   };
 
-  const handleEdit = () => {
-    const url = `http://localhost:8000/tamagotchis/${params.tamagotchiId}`;
-    editFetchCall(url);
-    router.push(`/tamagotchis/`);
+  const handleUpdate = () => {
+    const newTamagotchiName = window.prompt(
+      "Enter a new name: ",
+      `${tamagotchi.name}`
+    );
+    if (newTamagotchiName) {
+      const url = `http://localhost:8000/tamagotchis/${params.tamagotchiId}`;
+      updateFetchCall(url, newTamagotchiName);
+      window.location.reload();
+    }
   };
 
   return (
     <div className="buttonContainer">
-      <button onClick={handleEdit}>EDIT {tamagotchiNameUppercase}</button>
+      <button onClick={handleUpdate}>CHANGE NAME</button>
       <button onClick={handleDelete}>KILL {tamagotchiNameUppercase}</button>
     </div>
   );

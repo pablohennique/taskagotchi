@@ -36,8 +36,10 @@ export default function TamagotchiPage({ params }) {
         break;
     }
   }
-  setHungerDescription();
-  setTamagotchiImage(tamagotchi.breed);
+  if (tamagotchi) {
+    setHungerDescription();
+    setTamagotchiImage(tamagotchi.breed);
+  }
   return (
     <>
       <div className={styles.tamagotchiContainer}>
