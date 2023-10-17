@@ -1,13 +1,10 @@
 "use client";
 
 import { useBackendFetchCall } from "@/lib/backend";
-import Link from "next/link";
 import styles from "./page.module.css";
-import { deleteFetchCall } from "@/lib/backend";
-import { useRouter } from "next/navigation";
+import EditDeleteButtons from "@/components/edit-delete-buttons";
 
 export default function TamagotchiPage({ params }) {
-  const router = useRouter();
   const url = `http://localhost:8000/tamagotchis/${params.tamagotchiId}`;
   const [tamagotchi, setTamagotchi] = useBackendFetchCall(
     "tamagotchi",
@@ -16,10 +13,7 @@ export default function TamagotchiPage({ params }) {
   );
   let hungerDescription;
   let tamagotchiImage;
-  let tamagotchiNameUppercase;
-  if (tamagotchi.name) {
-    tamagotchiNameUppercase = tamagotchi.name.toUpperCase();
-  }
+
   function setHungerDescription() {
     if (tamagotchi.hunger <= 25) {
       hungerDescription = "Very Hungry";
@@ -27,6 +21,7 @@ export default function TamagotchiPage({ params }) {
       hungerDescription = "Hungry";
     }
   }
+
   function setTamagotchiImage(breed) {
     switch (breed) {
       case "Dragon":
@@ -41,12 +36,6 @@ export default function TamagotchiPage({ params }) {
         break;
     }
   }
-  const handleDelete = () => {
-    const url = `http://localhost:8000/tamagotchis/${params.tamagotchiId}`;
-    deleteFetchCall(url);
-    router.push("/tamagotchis");
-  };
-
   setHungerDescription();
   setTamagotchiImage(tamagotchi.breed);
   return (
@@ -63,10 +52,7 @@ export default function TamagotchiPage({ params }) {
           <img src={tamagotchiImage} alt="Cat Tamagotchi" />
         </div>
       </div>
-      <div className="buttonContainer">
-        <Link href="/tamagotchis/create">EDIT TAMAGOTCHI</Link>
-        <button onClick={handleDelete}>KILL {tamagotchiNameUppercase}</button>
-      </div>
+      <EditDeleteButtons tamagotchi={tamagotchi} params={params} />
     </>
   );
 }
