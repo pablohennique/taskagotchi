@@ -21,7 +21,9 @@ export default function UserLoginPage() {
     event.preventDefault();
     const url = "http://localhost:8000/users/login";
     loginFetchCall(url, email, password);
-    router.push("/tamagotchis");
+    setTimeout(() => {
+      router.push("/tamagotchis");
+    }, 1500);
   };
 
   return (
