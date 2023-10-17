@@ -3,8 +3,11 @@
 import { useBackendFetchCall } from "@/lib/backend";
 import Link from "next/link";
 import styles from "./page.module.css";
+import { deleteFetchCall } from "@/lib/backend";
+import { useRouter } from "next/navigation";
 
 export default function TamagotchiPage({ params }) {
+  const router = useRouter();
   const url = `http://localhost:8000/tamagotchis/${params.tamagotchiId}`;
   const [tamagotchi, setTamagotchi] = useBackendFetchCall(
     "tamagotchi",
@@ -38,6 +41,12 @@ export default function TamagotchiPage({ params }) {
         break;
     }
   }
+  const handleDelete = () => {
+    const url = `http://localhost:8000/tamagotchis/${params.tamagotchiId}`;
+    deleteFetchCall(url);
+    router.push("/tamagotchis");
+  };
+
   setHungerDescription();
   setTamagotchiImage(tamagotchi.breed);
   return (
@@ -56,7 +65,7 @@ export default function TamagotchiPage({ params }) {
       </div>
       <div className="buttonContainer">
         <Link href="/tamagotchis/create">EDIT TAMAGOTCHI</Link>
-        <Link href="/tamagotchis/create">KILL {tamagotchiNameUppercase}</Link>
+        <button onClick={handleDelete}>KILL {tamagotchiNameUppercase}</button>
       </div>
     </>
   );

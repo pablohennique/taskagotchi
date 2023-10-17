@@ -32,7 +32,7 @@ export function useBackendFetchCall(key, initialValue, url) {
   return [value, setValue];
 }
 
-export function loginFetchCall(url, email, password) {
+export async function loginFetchCall(url, email, password) {
   const requestBody = JSON.stringify({ email, password });
   const options = {
     method: "POST",
@@ -42,24 +42,22 @@ export function loginFetchCall(url, email, password) {
     body: requestBody,
   };
 
-  fetch(url, options)
-    .then((res) => {
-      if (res.ok) {
-        return res.json();
-      } else {
-        throw new Error("Login failed");
-      }
-    })
-    .then((data) => {
-      localStorage.setItem("accessToken", data.accessToken);
-      console.log("Login successful. Access Token:", data.accessToken);
-    })
-    .catch((error) => {
-      console.error("An error occurred during login:", error);
-    });
+  try {
+    const response = await fetch(url, options);
+
+    if (!response.ok) {
+      throw new Error("Login Failed");
+    }
+
+    const data = await response.json();
+    localStorage.setItem("accessToken", data.accessToken);
+    console.log("Login successful. Access Token:", data.accessToken);
+  } catch (error) {
+    console.error("An error occurred during login:", error);
+  }
 }
 
-export function createTamagotchiFetchCall(url, name, breed) {
+export async function createTamagotchiFetchCall(url, name, breed) {
   const requestBody = JSON.stringify({ name, breed });
   const options = {
     method: "POST",
@@ -70,19 +68,40 @@ export function createTamagotchiFetchCall(url, name, breed) {
     body: requestBody,
   };
 
-  fetch(url, options)
-    .then((res) => {
-      if (res.ok) {
-        return res.json();
-      } else {
-        throw new Error("Creation failed");
-      }
-    })
-    .then((data) => {
-      console.log(data);
-      console.log("Tamagotchi created successfully. Name:", data.name);
-    })
-    .catch((error) => {
-      console.error("An error occurred during Tamagotchi creation:", error);
-    });
+  try {
+    const response = await fetch(url, options);
+
+    if (!response.ok) {
+      throw new Error("Creation failed");
+    }
+
+    const data = await response.json();
+    console.log(data);
+    console.log("Tamagotchi created successfully. Name:", data.name);
+  } catch (error) {
+    console.log("An error occurred during Tamagotchi creation:", error);
+  }
+}
+
+export async function deleteFetchCall(url) {
+  const options = {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+    },
+  };
+  try {
+    const response = await fetch(url, options);
+    if (!response.ok) {
+      throw new Error("Delete failed");
+    }
+    console.log("clicked!");
+    console.log(response);
+    const data = await response.json();
+    console.log(data);
+    console.log("Tamagotchi Deleted: ", data);
+  } catch (error) {
+    console.log("An error occurred while trying to delete Tamagotchi:", error);
+  }
 }
