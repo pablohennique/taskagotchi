@@ -1,15 +1,20 @@
 import { deleteFetchCall, updateFetchCall } from "@/lib/backend";
 import { useRouter } from "next/navigation";
+import { useState, useEffect } from "react";
 
 export default function EditDeleteButtons(props) {
   const router = useRouter();
 
-  const { tamagotchi, params } = props;
-  let tamagotchiNameUppercase;
+  const { tamagotchi, params, onUpdate } = props;
+  const [tamagotchiNameUppercase, setTamagotchiNameUppercase] = useState(
+    tamagotchi.name ? tamagotchi.name.toUpperCase() : ""
+  );
 
-  if (tamagotchi.name) {
-    tamagotchiNameUppercase = tamagotchi.name.toUpperCase();
-  }
+  useEffect(() => {
+    if (tamagotchi.name) {
+      setTamagotchiNameUppercase(tamagotchi.name.toUpperCase());
+    }
+  }, [tamagotchi.name]);
 
   const handleDelete = () => {
     const confirmation = window.confirm(
@@ -30,7 +35,9 @@ export default function EditDeleteButtons(props) {
     if (newTamagotchiName) {
       const url = `http://localhost:8000/tamagotchis/${params.tamagotchiId}`;
       updateFetchCall(url, newTamagotchiName);
-      window.location.reload();
+      onUpdate(newTamagotchiName);
+      setTamagotchiNameUppercase(newTamagotchiName.toUpperCase());
+      // window.location.reload();
     }
   };
 

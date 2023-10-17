@@ -1,6 +1,7 @@
 "use client";
 
 import { useBackendFetchCall } from "@/lib/backend";
+import { useState } from "react";
 import styles from "./page.module.css";
 import EditDeleteButtons from "@/components/edit-delete-buttons";
 
@@ -11,8 +12,14 @@ export default function TamagotchiPage({ params }) {
     [],
     url
   );
+  const [updatedName, setUpdatedName] = useState(null);
+
   let hungerDescription;
   let tamagotchiImage;
+
+  const onUpdate = (newName) => {
+    setUpdatedName(newName);
+  };
 
   function setHungerDescription() {
     if (tamagotchi.hunger <= 25) {
@@ -44,7 +51,7 @@ export default function TamagotchiPage({ params }) {
     <>
       <div className={styles.tamagotchiContainer}>
         <div>
-          <h1>{tamagotchi.name}</h1>
+          <h1>{updatedName || tamagotchi.name}</h1>
           <h3>Breed: {tamagotchi.breed}</h3>
           <h3>Age: {tamagotchi.age}</h3>
           <h3>Hunger: {hungerDescription}</h3>
@@ -54,7 +61,11 @@ export default function TamagotchiPage({ params }) {
           <img src={tamagotchiImage} alt="Cat Tamagotchi" />
         </div>
       </div>
-      <EditDeleteButtons tamagotchi={tamagotchi} params={params} />
+      <EditDeleteButtons
+        tamagotchi={tamagotchi}
+        params={params}
+        onUpdate={onUpdate}
+      />
     </>
   );
 }
