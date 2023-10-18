@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 
 export default function EditDeleteButtons(props) {
   const router = useRouter();
+  const baseUrl = process.env.API_BASE_PATH;
 
   const { tamagotchi, params, onUpdate } = props;
   const [tamagotchiNameUppercase, setTamagotchiNameUppercase] = useState(
@@ -21,7 +22,7 @@ export default function EditDeleteButtons(props) {
       `Are you sure you want to kill ${tamagotchi.name}?`
     );
     if (confirmation) {
-      const url = `http://localhost:8000/tamagotchis/${params.tamagotchiId}`;
+      const url = baseUrl + `/tamagotchis/${params.tamagotchiId}`;
       deleteFetchCall(url);
       router.push("/tamagotchis");
     }
@@ -33,7 +34,7 @@ export default function EditDeleteButtons(props) {
       `${tamagotchi.name}`
     );
     if (newTamagotchiName) {
-      const url = `http://localhost:8000/tamagotchis/${params.tamagotchiId}`;
+      const url = baseUrl + `/tamagotchis/${params.tamagotchiId}`;
       updateFetchCall(url, newTamagotchiName);
       onUpdate(newTamagotchiName);
       setTamagotchiNameUppercase(newTamagotchiName.toUpperCase());

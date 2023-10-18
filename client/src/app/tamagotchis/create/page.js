@@ -19,7 +19,8 @@ export default function CreateTamagotchi() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    const url = "http://localhost:8000/tamagotchis";
+    const baseUrl = process.env.API_BASE_PATH;
+    const url = baseUrl + "/tamagotchis";
     createTamagotchiFetchCall(url, name, breed);
     router.push("/tamagotchis");
   };

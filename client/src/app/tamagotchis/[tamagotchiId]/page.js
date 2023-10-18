@@ -6,7 +6,9 @@ import styles from "./page.module.css";
 import EditDeleteButtons from "@/components/edit-delete-buttons";
 
 export default function TamagotchiPage({ params }) {
-  const url = `http://localhost:8000/tamagotchis/${params.tamagotchiId}`;
+  const baseUrl = process.env.API_BASE_PATH;
+
+  const url = baseUrl + `/tamagotchis/${params.tamagotchiId}`;
   const [tamagotchi, setTamagotchi] = useBackendFetchCall(
     "tamagotchi",
     [],

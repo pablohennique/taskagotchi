@@ -19,7 +19,8 @@ export default function UserLoginPage() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    const url = "http://localhost:8000/users/login";
+    const baseUrl = process.env.API_BASE_PATH;
+    const url = baseUrl + "/users/login";
     loginFetchCall(url, email, password);
     setTimeout(() => {
       router.push("/tamagotchis");
