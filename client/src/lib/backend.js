@@ -129,3 +129,49 @@ export async function updateFetchCall(url, name) {
     console.log("An error occurred while trying to update Tamagotchi:", error);
   }
 }
+
+export async function updateRecurrencesFetchCall(
+  url,
+  repeat_monday,
+  repeat_tuesday,
+  repeat_wednesday,
+  repeat_thursday,
+  repeat_friday,
+  repeat_saturday,
+  repeat_sunday
+) {
+  const requestBody = JSON.stringify({
+    repeat_monday,
+    repeat_tuesday,
+    repeat_wednesday,
+    repeat_thursday,
+    repeat_friday,
+    repeat_saturday,
+    repeat_sunday,
+  });
+
+  const options = {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+    },
+    body: requestBody,
+  };
+
+  try {
+    const response = await fetch(url, options);
+
+    if (!response.ok) {
+      throw new Error("Update failed");
+    }
+
+    const data = await response.json();
+    console.log("Task recurrences edited: ", data);
+  } catch (error) {
+    console.log(
+      "An error occurred while trying to update task recurrences:",
+      error
+    );
+  }
+}
