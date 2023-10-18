@@ -16,7 +16,7 @@ const tamagotchiSchema = mongoose.Schema(
       enum: ["Dragon", "Cat", "Dog"],
       required: [
         true,
-        "Please choose a breed of Tamagotchi - Air, Sea of Land",
+        "Please choose a breed of Tamagotchi - Dragon, Dog, Cat",
       ],
     },
     age: {

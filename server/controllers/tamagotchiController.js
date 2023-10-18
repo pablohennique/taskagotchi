@@ -72,7 +72,6 @@ const updateTamagotchi = asyncHandler(async (req, res) => {
 // @access private
 const deleteTamagotchi = asyncHandler(async (req, res) => {
   const tamagotchi = await Tamagotchi.findById(req.params.id);
-  console.log(req.body);
 
   if (!tamagotchi) {
     res.status(404);
