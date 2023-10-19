@@ -1,3 +1,5 @@
+"use client";
+
 import { deleteFetchCall, updateFetchCall } from "@/lib/backend";
 import { useRouter } from "next/navigation";
 import { useState, useEffect } from "react";

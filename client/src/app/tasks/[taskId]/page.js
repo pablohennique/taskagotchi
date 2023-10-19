@@ -1,9 +1,15 @@
 "use client";
-import { useBackendFetchCall, updateRecurrencesFetchCall } from "@/lib/backend";
+import {
+  useBackendFetchCall,
+  updateRecurrencesFetchCall,
+  deleteFetchCall,
+} from "@/lib/backend";
 import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
 import styles from "./page.module.css";
 
 export default function TaskPage({ params }) {
+  const router = useRouter();
   const baseUrl = process.env.API_BASE_PATH;
   const urlPath = "/tasks";
   const url = baseUrl + `${urlPath}/${params.taskId}`;
@@ -44,6 +50,18 @@ export default function TaskPage({ params }) {
       sundayCheck
     );
     // add a pop up that confirms save successful
+    window.alert("Task has been saved successfully!");
+  }
+
+  function handleDelete() {
+    const confirmation = window.confirm(
+      `Are you sure you want to delete this task?`
+    );
+    if (confirmation) {
+      const url = baseUrl + `/tasks/${params.taskId}`;
+      deleteFetchCall(url);
+      router.push("/tasks");
+    }
   }
   return (
     <>
@@ -115,6 +133,7 @@ export default function TaskPage({ params }) {
           <button type="submit">Save</button>
         </form>
       </div>
+      <button onClick={handleDelete}>DELETE TASK</button>
     </>
   );
 }

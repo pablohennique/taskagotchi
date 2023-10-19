@@ -59,7 +59,29 @@ export async function loginFetchCall(url, email, password) {
   }
 }
 
-// TAMAGOTCHI
+// TAMAGOTCHI AND TASK
+export async function deleteFetchCall(url) {
+  const options = {
+    method: "DELETE",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+    },
+  };
+  try {
+    const response = await fetch(url, options);
+    if (!response.ok) {
+      throw new Error("Delete failed");
+    }
+
+    const data = await response.json();
+    console.log("Tamagotchi Deleted: ", data);
+  } catch (error) {
+    console.log("An error occurred while trying to delete Tamagotchi:", error);
+  }
+}
+
+// TAMAGOTCHI ONLY
 export async function createTamagotchiFetchCall(url, name, breed) {
   const requestBody = JSON.stringify({ name, breed });
   const options = {
@@ -83,27 +105,6 @@ export async function createTamagotchiFetchCall(url, name, breed) {
     console.log("Tamagotchi created successfully. Name:", data.name);
   } catch (error) {
     console.log("An error occurred during Tamagotchi creation:", error);
-  }
-}
-
-export async function deleteFetchCall(url) {
-  const options = {
-    method: "DELETE",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
-    },
-  };
-  try {
-    const response = await fetch(url, options);
-    if (!response.ok) {
-      throw new Error("Delete failed");
-    }
-
-    const data = await response.json();
-    console.log("Tamagotchi Deleted: ", data);
-  } catch (error) {
-    console.log("An error occurred while trying to delete Tamagotchi:", error);
   }
 }
 
@@ -133,7 +134,7 @@ export async function updateFetchCall(url, name) {
   }
 }
 
-// TASKS
+// TASKS ONLY
 export async function updateRecurrencesFetchCall(
   url,
   repeat_monday,
