@@ -175,3 +175,33 @@ export async function updateRecurrencesFetchCall(
     );
   }
 }
+
+export async function updateTaskCompletion(url, completed) {
+  const requestBody = JSON.stringify({
+    completed,
+  });
+  const options = {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+    },
+    body: requestBody,
+  };
+
+  try {
+    const response = await fetch(url, options);
+
+    if (!response.ok) {
+      throw new Error("Updating task completion failed");
+    }
+
+    const data = await response.json();
+    console.log("Task completion updated: ", data);
+  } catch (error) {
+    console.log(
+      "An error occurred while trying to update task completions:",
+      error
+    );
+  }
+}

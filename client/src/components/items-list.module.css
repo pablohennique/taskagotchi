@@ -3,6 +3,10 @@
   color: black;
 }
 
+.list div {
+  margin-bottom: 10px;
+}
+
 .list a:hover {
   color: grey;
 }
