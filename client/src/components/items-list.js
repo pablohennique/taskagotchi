@@ -21,6 +21,13 @@ export default function ItemsList(props) {
     <ul className={styles.list}>
       {items.map((item) => (
         <div key={item._id}>
+          {urlPath === "/tasks" ? (
+            <input
+              type="checkbox"
+              defaultChecked={item.completed ? true : false}
+              onChange={() => handleCompleteTask(item)}
+            />
+          ) : null}
           <Link href={`${urlPath}/${item._id}`}>
             {urlPath === "/tamagotchis" ? (
               <li key={item._id}>{`${item.name} - ${item.breed}`}</li>
@@ -29,16 +36,6 @@ export default function ItemsList(props) {
               <li key={item._id}>{`${item.title}`}</li>
             ) : null}
           </Link>
-          {urlPath === "/tasks" ? (
-            <label>
-              COMPLETED:
-              <input
-                type="checkbox"
-                defaultChecked={item.completed ? true : false}
-                onChange={() => handleCompleteTask(item)}
-              />
-            </label>
-          ) : null}
         </div>
       ))}
     </ul>

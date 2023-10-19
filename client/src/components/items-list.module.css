@@ -1,9 +1,11 @@
 .list a {
   text-decoration: none;
   color: black;
+  list-style-type: none;
 }
 
 .list div {
+  display: flex;
   margin-bottom: 10px;
 }
 

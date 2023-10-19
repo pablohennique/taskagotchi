@@ -133,7 +133,9 @@ export default function TaskPage({ params }) {
           <button type="submit">Save</button>
         </form>
       </div>
-      <button onClick={handleDelete}>DELETE TASK</button>
+      <div className="buttonContainer">
+        <button onClick={handleDelete}>DELETE TASK</button>
+      </div>
     </>
   );
 }
