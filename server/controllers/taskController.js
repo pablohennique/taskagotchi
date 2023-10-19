@@ -100,10 +100,30 @@ const deleteTask = asyncHandler(async (req, res) => {
   res.status(203).json(task);
 });
 
+// @desc reset all tasks to not completed at 3 am
+const resetCompletedTasks = async () => {
+  const completedTasks = await Task.find({ completed: true });
+
+  if (!completedTasks) {
+    res.status(404);
+    throw new Error("no completed tasks found");
+  }
+
+  try {
+    for (const task of completedTasks) {
+      task.completed = false;
+      await task.save();
+    }
+  } catch (error) {
+    console.error("Error updating tasks:", error);
+  }
+};
+
 module.exports = {
   getTasks,
   getTask,
   createTask,
   updateTask,
   deleteTask,
+  resetCompletedTasks,
 };
