@@ -46,7 +46,7 @@ export default function CreateTamagotchi() {
             <option value="Cat">Cat</option>
           </select>
         </div>
-        <button type="submit">Create</button>
+        <button type="submit">Create Tamagotchi</button>
       </form>
     </>
   );

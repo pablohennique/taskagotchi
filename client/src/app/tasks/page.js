@@ -14,7 +14,7 @@ export default function TasksPage() {
       <h1>My Tasks</h1>
       <ItemsList items={tasks} urlPath={urlPath} />
       <div className="buttonContainer">
-        <Link href="/tamagotchis/create">CREATE TASK</Link>
+        <Link href="/tasks/create">CREATE TASK</Link>
       </div>
     </>
   );

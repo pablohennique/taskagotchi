@@ -6,10 +6,8 @@ import { updateTaskCompletion } from "@/lib/backend";
 
 export default function ItemsList(props) {
   const { items, urlPath } = props;
-  // const [completeTask, setCompleteTask] = useState(false);
-  function handleCompleteTask(task) {
-    console.log(task);
 
+  function handleCompleteTask(task) {
     const baseUrl = process.env.API_BASE_PATH;
     const url = baseUrl + `/tasks/${task._id}`;
 

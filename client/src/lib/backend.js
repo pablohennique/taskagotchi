@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 
+// GET CALL FOR LIST ITEMS
 export function useBackendFetchCall(key, initialValue, url) {
   const [value, setValue] = useState(initialValue);
 
@@ -32,6 +33,7 @@ export function useBackendFetchCall(key, initialValue, url) {
   return [value, setValue];
 }
 
+// USER
 export async function loginFetchCall(url, email, password) {
   const requestBody = JSON.stringify({ email, password });
   const options = {
@@ -57,6 +59,7 @@ export async function loginFetchCall(url, email, password) {
   }
 }
 
+// TAMAGOTCHI
 export async function createTamagotchiFetchCall(url, name, breed) {
   const requestBody = JSON.stringify({ name, breed });
   const options = {
@@ -130,6 +133,7 @@ export async function updateFetchCall(url, name) {
   }
 }
 
+// TASKS
 export async function updateRecurrencesFetchCall(
   url,
   repeat_monday,
@@ -203,5 +207,52 @@ export async function updateTaskCompletion(url, completed) {
       "An error occurred while trying to update task completions:",
       error
     );
+  }
+}
+
+export async function createTaskFetchCall(
+  url,
+  title,
+  difficulty,
+  repeat_monday,
+  repeat_tuesday,
+  repeat_wednesday,
+  repeat_thursday,
+  repeat_friday,
+  repeat_saturday,
+  repeat_sunday
+) {
+  const requestBody = JSON.stringify({
+    title,
+    difficulty,
+    repeat_monday,
+    repeat_tuesday,
+    repeat_wednesday,
+    repeat_thursday,
+    repeat_friday,
+    repeat_saturday,
+    repeat_sunday,
+  });
+  const options = {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+    },
+    body: requestBody,
+  };
+
+  try {
+    const response = await fetch(url, options);
+
+    if (!response.ok) {
+      throw new Error("Creation failed");
+    }
+
+    const data = await response.json();
+    console.log(data);
+    console.log("Task created successfully. Name:", data.title);
+  } catch (error) {
+    console.log("An error occurred during Task creation:", error);
   }
 }
