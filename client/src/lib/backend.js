@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { calculateFoodEarned } from "@/services/calculations";
 
 // GET CALL FOR LIST ITEMS
 export function useBackendFetchCall(key, initialValue, url) {
@@ -57,6 +58,22 @@ export async function loginFetchCall(url, email, password) {
   } catch (error) {
     console.error("An error occurred during login:", error);
   }
+}
+
+export async function userEarnsFood(userId, difficulty) {
+  let foodEarned = calculateFoodEarned(difficulty);
+
+  const requestBody = JSON.stringify({
+    completed,
+  });
+  const options = {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+    },
+    body: requestBody,
+  };
 }
 
 // TAMAGOTCHI AND TASK
@@ -181,7 +198,7 @@ export async function updateRecurrencesFetchCall(
   }
 }
 
-export async function updateTaskCompletion(url, completed) {
+export async function updateTaskCompletion(url, completed, userId, difficulty) {
   const requestBody = JSON.stringify({
     completed,
   });
@@ -199,6 +216,10 @@ export async function updateTaskCompletion(url, completed) {
 
     if (!response.ok) {
       throw new Error("Updating task completion failed");
+    }
+
+    if (completed === true) {
+      await userEarnsFoodFetchCall(userId, difficulty);
     }
 
     const data = await response.json();
