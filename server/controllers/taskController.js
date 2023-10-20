@@ -102,10 +102,11 @@ const deleteTask = asyncHandler(async (req, res) => {
 
 // @desc reset all tasks to not completed at 3 am
 const resetCompletedTasks = async () => {
+  console.log(Task);
   const completedTasks = await Task.find({ completed: true });
+  console.log(completedTasks);
 
-  if (!completedTasks) {
-    res.status(404);
+  if (completedTasks.length === 0) {
     throw new Error("no completed tasks found");
   }
 

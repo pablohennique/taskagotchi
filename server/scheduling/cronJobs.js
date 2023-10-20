@@ -1,9 +1,10 @@
-const cron = require("cron");
-const taskController = require("../controllers/taskController");
+const cron = require("node-cron");
 
-const taskCompletionResetJob = new cron.CronJob(
-  "0 3 * * *",
-  taskController.resetCompletedTasks
-);
+const { resetCompletedTasks } = require("../controllers/taskController");
 
-taskCompletionResetJob.start();
+const taskCompletionResetJob = cron.schedule("0 3 * * *", () => {
+  resetCompletedTasks();
+  console.log("All tasks have been reset to not completed");
+});
+
+module.exports = { taskCompletionResetJob };

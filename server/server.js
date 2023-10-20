@@ -2,9 +2,12 @@ const express = require("express");
 const cors = require("cors");
 const errorHandler = require("./middleware/errorHandler");
 const connectDb = require("./config/dbConnection");
+const { taskCompletionResetJob } = require("./scheduling/cronJobs");
 const dotenv = require("dotenv").config();
 
 connectDb();
+taskCompletionResetJob.start();
+
 const app = express();
 
 const port = 8000;
