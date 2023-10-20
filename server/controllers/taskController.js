@@ -1,4 +1,5 @@
 const asyncHandler = require("express-async-handler");
+const { earnFood } = require("../controllers/userController");
 const Task = require("../models/taskModel");
 
 // @desc Get all tasks associated to req.user
@@ -68,6 +69,11 @@ const updateTask = asyncHandler(async (req, res) => {
   const task = await Task.findById(req.params.id);
   console.log(req.body);
 
+  let completionStatusBeforeUpdate = task.completed;
+  console.log("Before:", completionStatusBeforeUpdate);
+  let completionStatusAfterUpdate = req.body.completed;
+  console.log("After", completionStatusAfterUpdate);
+
   if (!task) {
     res.status(404);
     throw new Error("task not found");
@@ -80,6 +86,12 @@ const updateTask = asyncHandler(async (req, res) => {
     new: true,
   });
   res.status(200).json(updatedTask);
+
+  if (!completionStatusBeforeUpdate && completionStatusAfterUpdate) {
+    let userId = task.user_id.toString();
+    let difficulty = task.difficulty;
+    earnFood(userId, difficulty); // passes infomration to User controller
+  }
 });
 
 // @desc Delete one task
@@ -102,9 +114,7 @@ const deleteTask = asyncHandler(async (req, res) => {
 
 // @desc reset all tasks to not completed at 3 am
 const resetCompletedTasks = async () => {
-  console.log(Task);
   const completedTasks = await Task.find({ completed: true });
-  console.log(completedTasks);
 
   if (completedTasks.length === 0) {
     throw new Error("no completed tasks found");

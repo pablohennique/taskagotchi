@@ -2,6 +2,7 @@ const asyncHandler = require("express-async-handler");
 const User = require("../models/userModel");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const { calculateFoodEarned } = require("../services/calculations");
 
 // @desc Register a user
 // @route POST users/register
@@ -72,4 +73,16 @@ const currentUser = asyncHandler(async (req, res) => {
   res.json(req.user);
 });
 
-module.exports = { registerUser, loginUser, currentUser };
+async function earnFood(userId, difficulty) {
+  console.log("inside user controller earnFood function");
+  let user = await User.findById(userId);
+  let foodEarned = calculateFoodEarned(difficulty);
+
+  user.food = user.food + foodEarned;
+  user.save();
+  console.log(
+    `user id ${userId} has earned ${foodEarned} food. The total is now ${user.food}`
+  );
+}
+
+module.exports = { registerUser, loginUser, currentUser, earnFood };
