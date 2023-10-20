@@ -70,9 +70,7 @@ const updateTask = asyncHandler(async (req, res) => {
   console.log(req.body);
 
   let completionStatusBeforeUpdate = task.completed;
-  console.log("Before:", completionStatusBeforeUpdate);
   let completionStatusAfterUpdate = req.body.completed;
-  console.log("After", completionStatusAfterUpdate);
 
   if (!task) {
     res.status(404);
