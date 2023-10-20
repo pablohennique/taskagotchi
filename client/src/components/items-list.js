@@ -15,11 +15,12 @@ export default function ItemsList(props) {
   }, [initialCheckedItems]);
 
   function handleCompleteTask(task) {
+    // CHECK IF IS CANCELLED ACTUALLY WORKS
+    let isCancelled = false;
+
     const baseUrl = process.env.API_BASE_PATH;
     const url = baseUrl + `/tasks/${task._id}`;
 
-    let userId = task.user_id;
-    let difficulty = task.difficulty;
     let completed = !task.completed; // Toggle the completion status
 
     setCheckedItems((prevCheckedItems) =>
@@ -28,7 +29,9 @@ export default function ItemsList(props) {
         : [...prevCheckedItems, task._id]
     );
 
-    updateTaskCompletion(url, completed, userId, difficulty);
+    if (!isCancelled) {
+      updateTaskCompletion(url, completed);
+    }
   }
 
   return (
