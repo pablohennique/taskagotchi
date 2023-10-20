@@ -9,10 +9,17 @@ export default function TasksPage() {
   const url = baseUrl + urlPath;
 
   const [tasks, setTasks] = useBackendFetchCall("tasks", [], url);
+  const initialCheckedTasks = tasks.filter((task) => task.completed);
+  const initialCheckedTaskIds = initialCheckedTasks.map((task) => task._id);
+
   return (
     <>
       <h1>My Tasks</h1>
-      <ItemsList items={tasks} urlPath={urlPath} />
+      <ItemsList
+        items={tasks}
+        urlPath={urlPath}
+        initialCheckedItems={initialCheckedTaskIds}
+      />
       <div className="buttonContainer">
         <Link href="/tasks/create">CREATE TASK</Link>
       </div>
