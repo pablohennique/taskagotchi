@@ -1,20 +1,27 @@
 "use client";
 
-import { useBackendFetchCall } from "@/lib/backend";
+import { useBackendFetchCall, getCurrentUserFetchCall } from "@/lib/backend";
 import { useState } from "react";
 import styles from "./page.module.css";
 import EditDeleteButtons from "@/components/edit-delete-buttons";
+import FeedButton from "@/components/feed-button";
 
 export default function TamagotchiPage({ params }) {
   const baseUrl = process.env.API_BASE_PATH;
-  const urlPath = "/tamagotchis";
-  const url = baseUrl + `${urlPath}/${params.tamagotchiId}`;
+
+  const userUrlPath = `/users/current`;
+  const userUrl = baseUrl + userUrlPath;
+  const [user, setUser] = useBackendFetchCall("user", [], userUrl);
+
+  const tamagotchiUrlPath = `/tamagotchis/${params.tamagotchiId}`;
+  const tamagotchiUrl = baseUrl + tamagotchiUrlPath;
 
   const [tamagotchi, setTamagotchi] = useBackendFetchCall(
     "tamagotchi",
     [],
-    url
+    tamagotchiUrl
   );
+
   const [updatedName, setUpdatedName] = useState(null);
 
   let hungerDescription;
@@ -31,7 +38,7 @@ export default function TamagotchiPage({ params }) {
       hungerDescription = "Hungry";
     } else if (tamagotchi.hunger >= 50) {
       hungerDescription = "Could grab a bite";
-    } else if ((tamagotchi.hunger = 100)) {
+    } else if (tamagotchi.hunger === 100) {
       hungerDescription = "Full";
     }
   }
@@ -62,6 +69,10 @@ export default function TamagotchiPage({ params }) {
           <h3>Breed: {tamagotchi.breed}</h3>
           <h3>Age: {tamagotchi.age}</h3>
           <h3>Hunger: {hungerDescription}</h3>
+          <div className={styles.foodBar}>
+            <FeedButton />
+            <p>Available food: {user.food}</p>
+          </div>
         </div>
         <div>
           {/* evolution stage will be showed in the image and will be calculated in Node */}

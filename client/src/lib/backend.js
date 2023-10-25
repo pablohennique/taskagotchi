@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 
-// GET CALL FOR LIST ITEMS
+// GET CALL FOR LIST ITEMS (USER, TAMAGOTCHIS AND TASKS)
 export function useBackendFetchCall(key, initialValue, url) {
   const [value, setValue] = useState(initialValue);
 

@@ -54,6 +54,7 @@ const loginUser = asyncHandler(async (req, res) => {
           username: user.username,
           email: user.email,
           id: user.id,
+          food: user.food,
         },
       },
       process.env.ACCESS_TOKEN_SECRET,

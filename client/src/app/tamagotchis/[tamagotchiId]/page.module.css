@@ -6,3 +6,13 @@
   margin-left: 50px;
   width: 200px;
 }
+
+.foodBar {
+  display: flex;
+}
+
+.foodBar button {
+  margin-right: 20px;
+  border-radius: 20px;
+  width: 80px;
+}
