@@ -74,7 +74,6 @@ const currentUser = asyncHandler(async (req, res) => {
 });
 
 async function earnFood(userId, difficulty) {
-  console.log("inside user controller earnFood function");
   let user = await User.findById(userId);
   let foodEarned = calculateFoodEarned(difficulty);
 
