@@ -74,6 +74,24 @@ const currentUser = asyncHandler(async (req, res) => {
   res.json(req.user);
 });
 
+// @desc update user info
+// @route PUT users/update
+// @access private
+const updateUser = asyncHandler(async (req, res) => {
+  const user = req.user;
+  console.log(req.body);
+
+  if (!user) {
+    res.status(404);
+    throw new Error("User not found");
+  }
+
+  const updatedUser = await User.findByIdAndUpdate(user.id, req.body, {
+    new: true,
+  });
+  res.status(200).json(updatedUser);
+});
+
 async function earnFood(userId, difficulty) {
   let user = await User.findById(userId);
   let foodEarned = calculateFoodEarned(difficulty);
@@ -85,4 +103,4 @@ async function earnFood(userId, difficulty) {
   );
 }
 
-module.exports = { registerUser, loginUser, currentUser, earnFood };
+module.exports = { registerUser, loginUser, currentUser, updateUser, earnFood };
