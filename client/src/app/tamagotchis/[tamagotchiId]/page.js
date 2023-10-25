@@ -27,8 +27,12 @@ export default function TamagotchiPage({ params }) {
   function setHungerDescription() {
     if (tamagotchi.hunger <= 25) {
       hungerDescription = "Very Hungry";
-    } else if (tamagotchi.hunger <= 50) {
+    } else if (tamagotchi.hunger < 50) {
       hungerDescription = "Hungry";
+    } else if (tamagotchi.hunger >= 50) {
+      hungerDescription = "Could grab a bite";
+    } else if ((tamagotchi.hunger = 100)) {
+      hungerDescription = "Full";
     }
   }
 
