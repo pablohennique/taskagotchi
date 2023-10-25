@@ -108,8 +108,16 @@ export async function createTamagotchiFetchCall(url, name, breed) {
   }
 }
 
-export async function updateFetchCall(url, name) {
-  const requestBody = JSON.stringify({ name });
+export async function updateFetchCall({ url, name, hunger }) {
+  let requestBody = {};
+
+  if (name !== undefined) {
+    requestBody = JSON.stringify({ url, name });
+  }
+
+  if (hunger !== undefined) {
+    requestBody = JSON.stringify({ url, hunger });
+  }
 
   const options = {
     method: "PUT",

@@ -37,7 +37,7 @@ export default function EditDeleteButtons(props) {
     );
     if (newTamagotchiName) {
       const url = baseUrl + `/tamagotchis/${params.tamagotchiId}`;
-      updateFetchCall(url, newTamagotchiName);
+      updateFetchCall({ url: url, name: newTamagotchiName });
       onUpdate(newTamagotchiName);
       setTamagotchiNameUppercase(newTamagotchiName.toUpperCase());
       // window.location.reload();

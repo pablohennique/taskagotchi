@@ -37,7 +37,7 @@ export default function TamagotchiPage({ params }) {
     } else if (tamagotchi.hunger < 50) {
       hungerDescription = "Hungry";
     } else if (tamagotchi.hunger >= 50) {
-      hungerDescription = "Could grab a bite";
+      hungerDescription = "Satisfied";
     } else if (tamagotchi.hunger === 100) {
       hungerDescription = "Full";
     }
@@ -70,7 +70,7 @@ export default function TamagotchiPage({ params }) {
           <h3>Age: {tamagotchi.age}</h3>
           <h3>Hunger: {hungerDescription}</h3>
           <div className={styles.foodBar}>
-            <FeedButton />
+            <FeedButton params={params} hunger={tamagotchi.hunger} />
             <p>Available food: {user.food}</p>
           </div>
         </div>
