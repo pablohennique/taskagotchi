@@ -1,35 +1,51 @@
 "use client";
 
-import { updateFetchCall } from "@/lib/backend";
+import { updateFetchCall, updateUserFetchCall } from "@/lib/backend";
 import { useEffect, useState } from "react";
 const delay = (ms) => new Promise((r) => setTimeout(r, ms));
 
 export default function FeedButton(props) {
-  const { hunger, params } = props;
+  const { hunger, params, food, onFoodUpdate } = props;
 
   const baseUrl = process.env.API_BASE_PATH;
   const url = baseUrl + `/tamagotchis/${params.tamagotchiId}`;
   const [hungerPoints, setHungerPoints] = useState(hunger);
   const [feedButtonClicked, setFeedButtonClicked] = useState(false);
+  const [userFood, setUserFood] = useState(food);
 
   useEffect(() => {
     setHungerPoints(hunger);
   }, [hunger]);
 
+  useEffect(() => {
+    setUserFood(food);
+  }, [food]);
+
   function handleFeed() {
     setFeedButtonClicked(true);
-    setHungerPoints(hungerPoints + 5);
+    if (userFood >= 5) {
+      if (hungerPoints <= 95) {
+        setHungerPoints(hungerPoints + 5);
+        setUserFood(userFood - 5);
+        onFoodUpdate(userFood - 5);
+      } else {
+        window.alert("Your tamagotchi is already full!");
+      }
+    } else {
+      window.alert("You don't have enough food!");
+    }
   }
 
   useEffect(() => {
     let isCurrent = true;
 
     const throttle = async () => {
-      await delay(2000);
+      await delay(1000);
       if (isCurrent && feedButtonClicked) {
         console.log(url);
         console.log(hungerPoints);
         updateFetchCall({ url: url, hunger: hungerPoints });
+        updateUserFetchCall({ food: userFood });
       }
     };
     throttle();

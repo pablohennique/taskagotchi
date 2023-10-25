@@ -33,7 +33,7 @@ export function useBackendFetchCall(key, initialValue, url) {
   return [value, setValue];
 }
 
-// USER
+// USER ONLY
 export async function loginFetchCall(url, email, password) {
   const requestBody = JSON.stringify({ email, password });
   const options = {
@@ -56,6 +56,38 @@ export async function loginFetchCall(url, email, password) {
     console.log("Login successful. Access Token:", data.accessToken);
   } catch (error) {
     console.error("An error occurred during login:", error);
+  }
+}
+
+export async function updateUserFetchCall({ food }) {
+  const url = process.env.API_BASE_PATH + "/users/update";
+
+  const requestBody = JSON.stringify({ food });
+  const options = {
+    method: "PUT",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+    },
+    body: requestBody,
+  };
+
+  try {
+    const response = await fetch(url, options);
+
+    if (!response.ok) {
+      throw new Error("User update failed");
+    }
+
+    const data = await response.json();
+    console.log(data);
+    console.log(
+      "The following username has been successfully updated (with given food):",
+      data.username,
+      data.food
+    );
+  } catch (error) {
+    console.log("An error occurred while trying to update user:", error);
   }
 }
 

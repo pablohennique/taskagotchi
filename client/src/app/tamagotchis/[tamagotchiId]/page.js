@@ -1,7 +1,7 @@
 "use client";
 
 import { useBackendFetchCall, getCurrentUserFetchCall } from "@/lib/backend";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import styles from "./page.module.css";
 import EditDeleteButtons from "@/components/edit-delete-buttons";
 import FeedButton from "@/components/feed-button";
@@ -15,7 +15,6 @@ export default function TamagotchiPage({ params }) {
 
   const tamagotchiUrlPath = `/tamagotchis/${params.tamagotchiId}`;
   const tamagotchiUrl = baseUrl + tamagotchiUrlPath;
-
   const [tamagotchi, setTamagotchi] = useBackendFetchCall(
     "tamagotchi",
     [],
@@ -23,22 +22,31 @@ export default function TamagotchiPage({ params }) {
   );
 
   const [updatedName, setUpdatedName] = useState(null);
+  const [food, setFood] = useState(null);
+  const [hungerPointsGained, setHungerPointsGained] = useState(0);
+  const [feedButtonClicked, setFeedButtonClicked] = useState(false);
 
   let hungerDescription;
   let tamagotchiImage;
 
-  const onUpdate = (newName) => {
+  const onNameUpdate = (newName) => {
     setUpdatedName(newName);
   };
 
+  const onFoodUpdate = (updatedFood) => {
+    setFeedButtonClicked(true);
+    setFood(updatedFood);
+  };
+
   function setHungerDescription() {
-    if (tamagotchi.hunger <= 25) {
+    console.log("tamagotchi hunger level", tamagotchi.hunger);
+    if (tamagotchi.hunger + hungerPointsGained <= 25) {
       hungerDescription = "Very Hungry";
-    } else if (tamagotchi.hunger < 50) {
+    } else if (tamagotchi.hunger + hungerPointsGained < 50) {
       hungerDescription = "Hungry";
-    } else if (tamagotchi.hunger >= 50) {
+    } else if (tamagotchi.hunger + hungerPointsGained <= 95) {
       hungerDescription = "Satisfied";
-    } else if (tamagotchi.hunger === 100) {
+    } else if (tamagotchi.hunger + hungerPointsGained > 95) {
       hungerDescription = "Full";
     }
   }
@@ -61,6 +69,14 @@ export default function TamagotchiPage({ params }) {
     setHungerDescription();
     setTamagotchiImage(tamagotchi.breed);
   }
+
+  useEffect(() => {
+    if (feedButtonClicked) {
+      setHungerPointsGained(hungerPointsGained + 5);
+      setHungerDescription();
+    }
+  }, [food]);
+
   return (
     <>
       <div className={styles.tamagotchiContainer}>
@@ -70,8 +86,13 @@ export default function TamagotchiPage({ params }) {
           <h3>Age: {tamagotchi.age}</h3>
           <h3>Hunger: {hungerDescription}</h3>
           <div className={styles.foodBar}>
-            <FeedButton params={params} hunger={tamagotchi.hunger} />
-            <p>Available food: {user.food}</p>
+            <FeedButton
+              params={params}
+              hunger={tamagotchi.hunger}
+              food={user.food}
+              onFoodUpdate={onFoodUpdate}
+            />
+            <p>Available food: {food || user.food}</p>
           </div>
         </div>
         <div>
@@ -82,7 +103,7 @@ export default function TamagotchiPage({ params }) {
       <EditDeleteButtons
         tamagotchi={tamagotchi}
         params={params}
-        onUpdate={onUpdate}
+        onNameUpdate={onNameUpdate}
       />
     </>
   );

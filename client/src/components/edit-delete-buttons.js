@@ -8,7 +8,7 @@ export default function EditDeleteButtons(props) {
   const router = useRouter();
   const baseUrl = process.env.API_BASE_PATH;
 
-  const { tamagotchi, params, onUpdate } = props;
+  const { tamagotchi, params, onNameUpdate } = props;
   const [tamagotchiNameUppercase, setTamagotchiNameUppercase] = useState(
     tamagotchi.name ? tamagotchi.name.toUpperCase() : ""
   );
@@ -38,7 +38,7 @@ export default function EditDeleteButtons(props) {
     if (newTamagotchiName) {
       const url = baseUrl + `/tamagotchis/${params.tamagotchiId}`;
       updateFetchCall({ url: url, name: newTamagotchiName });
-      onUpdate(newTamagotchiName);
+      onNameUpdate(newTamagotchiName);
       setTamagotchiNameUppercase(newTamagotchiName.toUpperCase());
       // window.location.reload();
     }

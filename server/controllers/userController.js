@@ -71,7 +71,11 @@ const loginUser = asyncHandler(async (req, res) => {
 // @route GET users/current
 // @access private
 const currentUser = asyncHandler(async (req, res) => {
-  res.json(req.user);
+  userId = req.user.id;
+  console.log(userId);
+  const user = await User.findById(userId);
+  res.json(user);
+  console.log(user);
 });
 
 // @desc update user info
