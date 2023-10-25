@@ -2,6 +2,7 @@
 
 import { updateFetchCall } from "@/lib/backend";
 import { useEffect, useState } from "react";
+const delay = (ms) => new Promise((r) => setTimeout(r, ms));
 
 export default function FeedButton(props) {
   const { hunger, params } = props;
@@ -22,11 +23,17 @@ export default function FeedButton(props) {
 
   useEffect(() => {
     let isCurrent = true;
-    if (isCurrent && feedButtonClicked) {
-      console.log(url);
-      console.log(hungerPoints);
-      updateFetchCall({ url: url, hunger: hungerPoints });
-    }
+
+    const throttle = async () => {
+      await delay(2000);
+      if (isCurrent && feedButtonClicked) {
+        console.log(url);
+        console.log(hungerPoints);
+        updateFetchCall({ url: url, hunger: hungerPoints });
+      }
+    };
+    throttle();
+
     return () => {
       isCurrent = false;
     };
