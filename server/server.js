@@ -2,11 +2,14 @@ const express = require("express");
 const cors = require("cors");
 const errorHandler = require("./middleware/errorHandler");
 const connectDb = require("./config/dbConnection");
-const { taskCompletionResetJob } = require("./scheduling/cronJobs");
+const {
+  taskCompletionResetCronJob,
+  tamagotchisAgeCronJob,
+  tamagotchisGetHungrierCronJob,
+} = require("./scheduling/cronJobs");
 const dotenv = require("dotenv").config();
 
 connectDb();
-taskCompletionResetJob.start();
 
 const app = express();
 
@@ -22,3 +25,8 @@ app.use(errorHandler);
 app.listen(port, () => {
   console.log(`Server is running on port 8000.`);
 });
+
+// Start Cron Jobs
+taskCompletionResetCronJob.start();
+tamagotchisAgeCronJob.start();
+tamagotchisGetHungrierCronJob.start();

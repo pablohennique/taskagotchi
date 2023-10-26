@@ -85,10 +85,51 @@ const deleteTamagotchi = asyncHandler(async (req, res) => {
   res.status(203).json(tamagotchi);
 });
 
+// @desc tamagotchis age by one day
+const tamagotchisAgeOneDay = async () => {
+  try {
+    const tamagotchis = await Tamagotchi.find({ alive: true });
+
+    for (const tamagotchi of tamagotchis) {
+      tamagotchi.age += 1;
+      await tamagotchi.save();
+    }
+    console.log(new Date(), "All tamagotchis have aged by 1 days");
+  } catch (error) {
+    console.error(new Date(), "Error aging tamagotchis at midnight:", error);
+  }
+};
+
+// @desc tamagotchis lose hunger points by a random amount
+const tamagotchisGetHungrier = async () => {
+  function getRandomHungerLost(min, max) {
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+  }
+  try {
+    const tamagotchis = await Tamagotchi.find({ alive: true });
+    for (const tamagotchi of tamagotchis) {
+      let hungerLost = getRandomHungerLost(5, 10);
+      tamagotchi.hunger = tamagotchi.hunger - hungerLost;
+      if (tamagotchi.hunger <= 0) {
+        tamagotchi.alive = false;
+      }
+      await tamagotchi.save();
+      // console.log(
+      //   `tamagotchi ${tamagotchi.name} lost ${hungerLost}. Hunger now at ${tamagotchi.hunger}`
+      // );
+    }
+    console.log(new Date(), "Hunger levels for all tamagotchis have gone down");
+  } catch (error) {
+    console.error(new Date(), "Error reducing hunger from tamagotchis", error);
+  }
+};
+
 module.exports = {
   getTamagotchis,
   getTamagotchi,
   createTamagotchi,
   updateTamagotchi,
   deleteTamagotchi,
+  tamagotchisAgeOneDay,
+  tamagotchisGetHungrier,
 };

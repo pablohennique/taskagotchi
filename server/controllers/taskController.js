@@ -123,8 +123,9 @@ const resetCompletedTasks = async () => {
       task.completed = false;
       await task.save();
     }
+    console.log(new Date(), "All tasks have been reset to not completed");
   } catch (error) {
-    console.error("Error updating tasks:", error);
+    console.error(new Date(), "Error reseting tasks at 3 am:", error);
   }
 };
 

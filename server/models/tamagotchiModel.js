@@ -31,9 +31,9 @@ const tamagotchiSchema = mongoose.Schema(
       type: Number,
       default: 1,
     },
-    status: {
-      type: String,
-      default: "Alive",
+    alive: {
+      type: Boolean,
+      default: true,
     },
   },
   {
