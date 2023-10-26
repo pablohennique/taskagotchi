@@ -39,7 +39,6 @@ export default function TamagotchiPage({ params }) {
   };
 
   function setHungerDescription() {
-    console.log("tamagotchi hunger level", tamagotchi.hunger);
     if (tamagotchi.hunger + hungerPointsGained <= 25) {
       hungerDescription = "Very Hungry";
     } else if (tamagotchi.hunger + hungerPointsGained < 50) {
@@ -92,7 +91,9 @@ export default function TamagotchiPage({ params }) {
               food={user.food}
               onFoodUpdate={onFoodUpdate}
             />
-            <p>Available food: {food || user.food}</p>
+            <p>
+              Available food: {food !== null && food >= 0 ? food : user.food}
+            </p>
           </div>
         </div>
         <div>
