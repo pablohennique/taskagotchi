@@ -1,10 +1,11 @@
 "use client";
 
-import { useBackendFetchCall, getCurrentUserFetchCall } from "@/lib/backend";
+import { useBackendFetchCall } from "@/lib/backend";
 import { useEffect, useState } from "react";
 import styles from "./page.module.css";
 import EditDeleteButtons from "@/components/edit-delete-buttons";
 import FeedButton from "@/components/feed-button";
+import { FaSkull } from "react-icons/fa";
 
 export default function TamagotchiPage({ params }) {
   const baseUrl = process.env.API_BASE_PATH;
@@ -96,9 +97,13 @@ export default function TamagotchiPage({ params }) {
             </p>
           </div>
         </div>
-        <div>
+        <div className={styles.imgContainer}>
           {/* evolution stage will be showed in the image and will be calculated in Node */}
-          <img src={tamagotchiImage} alt="Cat Tamagotchi" />
+          {tamagotchi.alive ? (
+            <img src={tamagotchiImage} alt="Cat Tamagotchi" />
+          ) : (
+            <FaSkull size={64} />
+          )}
         </div>
       </div>
       <EditDeleteButtons

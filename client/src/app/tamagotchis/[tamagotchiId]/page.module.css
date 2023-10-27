@@ -7,6 +7,12 @@
   width: 200px;
 }
 
+.imgContainer {
+  display: flex;
+  align-items: center;
+  margin-left: 50px;
+}
+
 .foodBar {
   display: flex;
 }
