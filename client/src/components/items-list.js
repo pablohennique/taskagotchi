@@ -2,6 +2,8 @@
 
 import Link from "next/link";
 import styles from "./items-list.module.css";
+import { FaSkull } from "react-icons/fa";
+
 import { useState, useEffect } from "react";
 import { updateTaskCompletion } from "@/lib/backend";
 
@@ -43,7 +45,9 @@ export default function ItemsList(props) {
           ) : null}
           <Link href={`${urlPath}/${item._id}`}>
             {urlPath === "/tamagotchis" ? (
-              <li key={item._id}>{`${item.name} - ${item.breed}`}</li>
+              <li key={item._id}>
+                {item.name} - {item.breed} {item.alive ? "" : <FaSkull />}
+              </li>
             ) : null}
             {urlPath === "/tasks" ? (
               <li key={item._id}>{`${item.title}`}</li>

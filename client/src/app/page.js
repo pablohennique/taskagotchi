@@ -9,6 +9,7 @@ export default function Home() {
     <>
       <div>
         <h1>Welcome to Taskagotchi!</h1>
+
         <p>Complete your daily tasks to feed your tamagotchis...</p>
         <p>... otherwise they will die</p>
         <p>Also, give them lots of love</p>
