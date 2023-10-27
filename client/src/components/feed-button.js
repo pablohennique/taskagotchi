@@ -5,7 +5,9 @@ import { useEffect, useState } from "react";
 const delay = (ms) => new Promise((r) => setTimeout(r, ms));
 
 export default function FeedButton(props) {
-  const { hunger, params, food, onFoodUpdate } = props;
+  const { params, tamagotchi, user, onFoodUpdate } = props;
+  const hunger = tamagotchi.hunger;
+  const food = user.food;
 
   const baseUrl = process.env.API_BASE_PATH;
   const url = baseUrl + `/tamagotchis/${params.tamagotchiId}`;
@@ -55,5 +57,9 @@ export default function FeedButton(props) {
     };
   }, [hungerPoints]);
 
-  return <button onClick={handleFeed}>FEED</button>;
+  return (
+    <button onClick={handleFeed} disabled={!tamagotchi.alive}>
+      FEED
+    </button>
+  );
 }

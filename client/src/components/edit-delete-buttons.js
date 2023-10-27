@@ -46,8 +46,12 @@ export default function EditDeleteButtons(props) {
 
   return (
     <div className="buttonContainer">
-      <button onClick={handleUpdate}>CHANGE NAME</button>
-      <button onClick={handleDelete}>KILL {tamagotchiNameUppercase}</button>
+      <button onClick={handleUpdate} disabled={!tamagotchi.alive}>
+        CHANGE NAME
+      </button>
+      <button onClick={handleDelete} disabled={!tamagotchi.alive}>
+        KILL {tamagotchiNameUppercase}
+      </button>
     </div>
   );
 }

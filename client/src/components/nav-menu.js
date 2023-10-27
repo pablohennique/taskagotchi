@@ -9,7 +9,7 @@ export default function NavMenu() {
           <Link href="/">Home</Link>
         </li>
         <li>
-          <Link href="/tamagotchis">My Tamagotchis</Link>
+          <Link href="/tamagotchis">Tamagotchis</Link>
         </li>
         <li>
           <Link href="/tasks">Taks</Link>

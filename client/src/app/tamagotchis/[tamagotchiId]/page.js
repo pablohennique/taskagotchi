@@ -88,8 +88,10 @@ export default function TamagotchiPage({ params }) {
           <div className={styles.foodBar}>
             <FeedButton
               params={params}
-              hunger={tamagotchi.hunger}
-              food={user.food}
+              tamagotchi={tamagotchi}
+              user={user}
+              // hunger={tamagotchi.hunger}
+              // food={user.food}
               onFoodUpdate={onFoodUpdate}
             />
             <p>
