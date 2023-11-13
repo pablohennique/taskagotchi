@@ -88,7 +88,9 @@ const updateTask = asyncHandler(async (req, res) => {
   if (!completionStatusBeforeUpdate && completionStatusAfterUpdate) {
     let userId = task.user_id.toString();
     let difficulty = task.difficulty;
-    earnFood(userId, difficulty); // passes infomration to User controller
+    let tasksAssociatedToUser = await Task.find({ user_id: userId });
+
+    earnFood(userId, difficulty, tasksAssociatedToUser); // passes infomration to User controller
   }
 });
 

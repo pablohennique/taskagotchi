@@ -96,14 +96,14 @@ const updateUser = asyncHandler(async (req, res) => {
   res.status(200).json(updatedUser);
 });
 
-async function earnFood(userId, difficulty) {
+async function earnFood(userId, difficulty, tasksAssociatedToUser) {
   let user = await User.findById(userId);
-  let foodEarned = calculateFoodEarned(difficulty);
+  let foodEarned = calculateFoodEarned(difficulty, tasksAssociatedToUser);
 
   user.food = user.food + foodEarned;
   user.save();
   console.log(
-    `user id ${userId} has earned ${foodEarned} food. The total is now ${user.food}`
+    `user id ${userId} has earned ${foodEarned} food for a ${difficulty} task. The total is now ${user.food}`
   );
 }
 
