@@ -23,7 +23,7 @@ app.use("/users", require("./routes/userRoutes"));
 app.use(errorHandler);
 
 app.listen(port, () => {
-  console.log(`Server is running on port 8000.`);
+  console.log(`Server is running on port ${port}.`);
 });
 
 // Start Cron Jobs
