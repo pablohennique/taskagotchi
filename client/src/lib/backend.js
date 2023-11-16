@@ -60,7 +60,7 @@ export async function loginFetchCall(url, email, password) {
 }
 
 export async function updateUserFetchCall({ food }) {
-  const url = process.env.API_BASE_PATH + "/users/update";
+  const url = process.env.NEXT_PUBLIC_API_BASE_PATH + "/users/update";
 
   const requestBody = JSON.stringify({ food });
   const options = {

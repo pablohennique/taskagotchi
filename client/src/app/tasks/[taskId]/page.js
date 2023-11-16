@@ -10,7 +10,7 @@ import styles from "./page.module.css";
 
 export default function TaskPage({ params }) {
   const router = useRouter();
-  const baseUrl = process.env.API_BASE_PATH;
+  const baseUrl = process.env.NEXT_PUBLIC_API_BASE_PATH;
   const urlPath = "/tasks";
   const url = baseUrl + `${urlPath}/${params.taskId}`;
 
@@ -37,7 +37,7 @@ export default function TaskPage({ params }) {
 
   function handleSubmit(e) {
     e.preventDefault();
-    const baseUrl = process.env.API_BASE_PATH;
+    const baseUrl = process.env.NEXT_PUBLIC_API_BASE_PATH;
     const url = baseUrl + `/tasks/${task._id}`;
     updateRecurrencesFetchCall(
       url,

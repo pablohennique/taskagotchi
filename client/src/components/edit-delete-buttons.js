@@ -6,7 +6,7 @@ import { useState, useEffect } from "react";
 
 export default function EditDeleteButtons(props) {
   const router = useRouter();
-  const baseUrl = process.env.API_BASE_PATH;
+  const baseUrl = process.env.NEXT_PUBLIC_API_BASE_PATH;
 
   const { tamagotchi, params, onNameUpdate } = props;
   const [tamagotchiNameUppercase, setTamagotchiNameUppercase] = useState(

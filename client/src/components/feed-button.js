@@ -9,7 +9,7 @@ export default function FeedButton(props) {
   const hunger = tamagotchi.hunger;
   const food = user.food;
 
-  const baseUrl = process.env.API_BASE_PATH;
+  const baseUrl = process.env.NEXT_PUBLIC_API_BASE_PATH;
   const url = baseUrl + `/tamagotchis/${params.tamagotchiId}`;
   const [hungerPoints, setHungerPoints] = useState(hunger);
   const [feedButtonClicked, setFeedButtonClicked] = useState(false);

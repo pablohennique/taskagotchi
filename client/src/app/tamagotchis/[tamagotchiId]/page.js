@@ -8,7 +8,7 @@ import FeedButton from "@/components/feed-button";
 import { FaSkull } from "react-icons/fa";
 
 export default function TamagotchiPage({ params }) {
-  const baseUrl = process.env.API_BASE_PATH;
+  const baseUrl = process.env.NEXT_PUBLIC_API_BASE_PATH;
 
   const userUrlPath = `/users/current`;
   const userUrl = baseUrl + userUrlPath;

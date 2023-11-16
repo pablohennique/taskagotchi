@@ -5,7 +5,7 @@ import Link from "next/link";
 import styles from "./page.module.css";
 
 export default function TamagotchisPage() {
-  const baseUrl = process.env.API_BASE_PATH;
+  const baseUrl = process.env.NEXT_PUBLIC_API_BASE_PATH;
   const urlPath = "/tamagotchis";
   const url = baseUrl + urlPath;
 

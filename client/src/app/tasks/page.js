@@ -4,7 +4,7 @@ import ItemsList from "@/components/items-list";
 import Link from "next/link";
 
 export default function TasksPage() {
-  const baseUrl = process.env.API_BASE_PATH;
+  const baseUrl = process.env.NEXT_PUBLIC_API_BASE_PATH;
   const urlPath = "/tasks";
   const url = baseUrl + urlPath;
 

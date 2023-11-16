@@ -28,7 +28,7 @@ export default function CreateTask() {
 
   const handleSubmit = (event) => {
     event.preventDefault();
-    const baseUrl = process.env.API_BASE_PATH;
+    const baseUrl = process.env.NEXT_PUBLIC_API_BASE_PATH;
     const url = baseUrl + "/tasks";
     createTaskFetchCall(
       url,

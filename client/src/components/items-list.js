@@ -17,7 +17,7 @@ export default function ItemsList(props) {
   }, [initialCheckedItems]);
 
   function handleCompleteTask(task) {
-    const baseUrl = process.env.API_BASE_PATH;
+    const baseUrl = process.env.NEXT_PUBLIC_API_BASE_PATH;
     const url = baseUrl + `/tasks/${task._id}`;
 
     let completed = !task.completed; // Toggle the completion status
