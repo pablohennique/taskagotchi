@@ -1,14 +1,14 @@
 "use client";
-
-import { useState } from "react";
 import { loginRegisterFetchCall } from "@/lib/backend";
+import { useState } from "react";
 import { useRouter } from "next/navigation";
 
-export default function UserLoginPage() {
+export default function UserRegisterPage() {
   const router = useRouter();
   const [message, setMessage] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [username, setUsername] = useState("");
 
   const handleEmailChange = (event) => {
     setEmail(event.target.value);
@@ -18,19 +18,23 @@ export default function UserLoginPage() {
     setPassword(event.target.value);
   };
 
+  const handleUsernameChange = (event) => {
+    setUsername(event.target.value);
+  };
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     const baseUrl = process.env.NEXT_PUBLIC_API_BASE_PATH;
-    const url = baseUrl + "/users/login";
-
+    const url = baseUrl + "/users/register";
     const response = await loginRegisterFetchCall({
       url: url,
+      username: username,
       email: email,
       password: password,
     });
 
     if (!response.success) {
-      setMessage("Login failed. Please try again. " + response.error);
+      setMessage("Registration failed. Please try again. " + response.error);
     } else if (response.success) {
       setMessage(response.message);
       setTimeout(() => {
@@ -41,11 +45,20 @@ export default function UserLoginPage() {
 
   return (
     <>
-      <h1>Login</h1>
+      <h1>Create an Account</h1>
       <div>
         <p>{message}</p>
       </div>
       <form onSubmit={handleSubmit}>
+        <div>
+          <label htmlFor="username">Username:</label>
+          <input
+            type="username"
+            id="username"
+            value={username}
+            onChange={handleUsernameChange}
+          />
+        </div>
         <div>
           <label htmlFor="email">Email:</label>
           <input
@@ -64,7 +77,7 @@ export default function UserLoginPage() {
             onChange={handlePasswordChange}
           />
         </div>
-        <button type="submit">Login</button>
+        <button type="submit">Register</button>
       </form>
     </>
   );

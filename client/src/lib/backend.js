@@ -34,8 +34,23 @@ export function useBackendFetchCall(key, initialValue, url) {
 }
 
 // USER ONLY
-export async function loginFetchCall(url, email, password) {
-  const requestBody = JSON.stringify({ email, password });
+export async function loginRegisterFetchCall({
+  url,
+  username,
+  email,
+  password,
+}) {
+  let requestBody = {};
+  let purpose = "";
+  let message = "";
+
+  if (!username) {
+    requestBody = JSON.stringify({ email, password });
+    purpose = "login";
+  } else {
+    requestBody = JSON.stringify({ username, email, password });
+    purpose = "registration";
+  }
   const options = {
     method: "POST",
     headers: {
@@ -48,14 +63,24 @@ export async function loginFetchCall(url, email, password) {
     const response = await fetch(url, options);
 
     if (!response.ok) {
-      throw new Error("Login Failed");
+      throw new Error(response.error);
     }
 
     const data = await response.json();
-    localStorage.setItem("accessToken", data.accessToken);
-    console.log("Login successful. Access Token:", data.accessToken);
+    if (purpose === "login") {
+      message = "Login successful";
+      localStorage.setItem("accessToken", data.accessToken);
+      console.log("Login successful. Access Token:", data.accessToken);
+      return { success: true, message: message };
+    } else if (purpose === "registration") {
+      message =
+        "Registration successful. Accaount created with email: " + email;
+      console.log(message);
+      return { success: true, message: message };
+    }
   } catch (error) {
-    console.error("An error occurred during login:", error);
+    console.error(`An error occurred during ${purpose}:`, error);
+    return { success: false, error: error };
   }
 }
 
