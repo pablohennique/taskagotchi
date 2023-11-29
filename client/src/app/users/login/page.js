@@ -30,7 +30,7 @@ export default function UserLoginPage() {
     });
 
     if (!response.success) {
-      setMessage("Login failed. Please try again. " + response.error);
+      setMessage(response.error + " Please try again.");
     } else if (response.success) {
       setMessage(response.message);
       setTimeout(() => {

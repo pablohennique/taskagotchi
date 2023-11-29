@@ -34,7 +34,7 @@ export default function UserRegisterPage() {
     });
 
     if (!response.success) {
-      setMessage("Registration failed. Please try again. " + response.error);
+      setMessage(response.error + " Please try again.");
     } else if (response.success) {
       setMessage(response.message);
       setTimeout(() => {

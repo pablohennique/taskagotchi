@@ -45,9 +45,11 @@ export async function loginRegisterFetchCall({
   let message = "";
 
   if (!username) {
+    //if Username empty, then it is a login
     requestBody = JSON.stringify({ email, password });
     purpose = "login";
   } else {
+    //if Username is not empty, then it is a registration
     requestBody = JSON.stringify({ username, email, password });
     purpose = "registration";
   }
@@ -63,23 +65,26 @@ export async function loginRegisterFetchCall({
     const response = await fetch(url, options);
 
     if (!response.ok) {
-      throw new Error(response.error);
+      const errorObject = await response.json();
+      throw new Error(errorObject.message);
     }
 
     const data = await response.json();
+
     if (purpose === "login") {
-      message = "Login successful";
+      message = "Login successful!";
+
       localStorage.setItem("accessToken", data.accessToken);
       console.log("Login successful. Access Token:", data.accessToken);
       return { success: true, message: message };
     } else if (purpose === "registration") {
       message =
         "Registration successful. Accaount created with email: " + email;
-      console.log(message);
       return { success: true, message: message };
     }
   } catch (error) {
     console.error(`An error occurred during ${purpose}:`, error);
+
     return { success: false, error: error };
   }
 }
