@@ -4,8 +4,9 @@ import { useState } from "react";
 import { createTaskFetchCall } from "@/lib/backend";
 import { useRouter } from "next/navigation";
 import styles from "./page.module.css";
+import logInCheck from "@/components/logInCheck";
 
-export default function CreateTask() {
+function CreateTask() {
   const router = useRouter();
   const [title, setTitle] = useState("");
   const [difficulty, setDifficulty] = useState("");
@@ -138,3 +139,5 @@ export default function CreateTask() {
     </>
   );
 }
+
+export default logInCheck(CreateTask);

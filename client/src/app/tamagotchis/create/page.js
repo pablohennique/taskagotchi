@@ -3,8 +3,9 @@
 import { useState } from "react";
 import { createTamagotchiFetchCall } from "@/lib/backend";
 import { useRouter } from "next/navigation";
+import logInCheck from "@/components/logInCheck";
 
-export default function CreateTamagotchi() {
+function CreateTamagotchi() {
   const router = useRouter();
   const [name, setName] = useState("");
   const [breed, setBreed] = useState("");
@@ -51,3 +52,5 @@ export default function CreateTamagotchi() {
     </>
   );
 }
+
+export default logInCheck(CreateTamagotchi);

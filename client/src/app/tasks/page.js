@@ -1,9 +1,10 @@
 "use client";
 import { useBackendFetchCall } from "@/lib/backend";
 import ItemsList from "@/components/items-list";
+import logInCheck from "@/components/logInCheck";
 import Link from "next/link";
 
-export default function TasksPage() {
+function TasksPage() {
   const baseUrl = process.env.NEXT_PUBLIC_API_BASE_PATH;
   const urlPath = "/tasks";
   const url = baseUrl + urlPath;
@@ -26,3 +27,5 @@ export default function TasksPage() {
     </>
   );
 }
+
+export default logInCheck(TasksPage);

@@ -1,10 +1,11 @@
 "use client";
 import { useBackendFetchCall } from "@/lib/backend";
 import ItemsList from "../../components/items-list";
+import logInCheck from "@/components/logInCheck";
 import Link from "next/link";
 import styles from "./page.module.css";
 
-export default function TamagotchisPage() {
+function TamagotchisPage() {
   const baseUrl = process.env.NEXT_PUBLIC_API_BASE_PATH;
   const urlPath = "/tamagotchis";
   const url = baseUrl + urlPath;
@@ -25,3 +26,5 @@ export default function TamagotchisPage() {
     </>
   );
 }
+
+export default logInCheck(TamagotchisPage);

@@ -6,10 +6,10 @@ import styles from "./page.module.css";
 import EditDeleteButtons from "@/components/edit-delete-buttons";
 import FeedButton from "@/components/feed-button";
 import { FaSkull } from "react-icons/fa";
+import logInCheck from "@/components/logInCheck";
 
-export default function TamagotchiPage({ params }) {
+function TamagotchiPage({ params }) {
   const baseUrl = process.env.NEXT_PUBLIC_API_BASE_PATH;
-
   const userUrlPath = `/users/current`;
   const userUrl = baseUrl + userUrlPath;
   const [user, setUser] = useBackendFetchCall("user", [], userUrl);
@@ -116,3 +116,5 @@ export default function TamagotchiPage({ params }) {
     </>
   );
 }
+
+export default logInCheck(TamagotchiPage);

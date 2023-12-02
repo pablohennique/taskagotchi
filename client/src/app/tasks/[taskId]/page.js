@@ -7,8 +7,9 @@ import {
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import styles from "./page.module.css";
+import logInCheck from "@/components/logInCheck";
 
-export default function TaskPage({ params }) {
+function TaskPage({ params }) {
   const router = useRouter();
   const baseUrl = process.env.NEXT_PUBLIC_API_BASE_PATH;
   const urlPath = "/tasks";
@@ -139,3 +140,5 @@ export default function TaskPage({ params }) {
     </>
   );
 }
+
+export default logInCheck(TaskPage);
