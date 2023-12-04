@@ -1,4 +1,9 @@
+import { useEffect } from "react";
+
 export function auth() {
-  const token = localStorage.getItem("accessToken");
+  useEffect(() => {
+    const token = localStorage.getItem("accessToken");
+  }, []);
+
   return !!token;
 }
