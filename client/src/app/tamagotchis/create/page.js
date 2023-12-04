@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { createTamagotchiFetchCall } from "@/lib/backend";
 import { useRouter } from "next/navigation";
-import logInCheck from "@/components/logInCheck";
+import logInCheck from "@/utils/logInCheck";
 
 function CreateTamagotchi() {
   const router = useRouter();

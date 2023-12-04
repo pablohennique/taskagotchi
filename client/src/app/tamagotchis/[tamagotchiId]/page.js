@@ -6,7 +6,7 @@ import styles from "./page.module.css";
 import EditDeleteButtons from "@/components/edit-delete-buttons";
 import FeedButton from "@/components/feed-button";
 import { FaSkull } from "react-icons/fa";
-import logInCheck from "@/components/logInCheck";
+import logInCheck from "@/utils/logInCheck";
 
 function TamagotchiPage({ params }) {
   const baseUrl = process.env.NEXT_PUBLIC_API_BASE_PATH;

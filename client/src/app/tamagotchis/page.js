@@ -1,7 +1,7 @@
 "use client";
 import { useBackendFetchCall } from "@/lib/backend";
 import ItemsList from "../../components/items-list";
-import logInCheck from "@/components/logInCheck";
+import logInCheck from "@/utils/logInCheck";
 import Link from "next/link";
 import styles from "./page.module.css";
 

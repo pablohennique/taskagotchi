@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { useRouter } from "next/navigation";
+import { auth } from "@/utils/auth";
 
 export default function logInCheck(WrappedComponent) {
   const Wrapper = (props) => {
@@ -7,10 +8,10 @@ export default function logInCheck(WrappedComponent) {
 
     useEffect(() => {
       // Check if user is authenticated
-      const token = localStorage.getItem("accessToken");
+      const userLoggedIn = auth();
 
       // If not authenticated, redirect to the login page
-      if (!token) {
+      if (!userLoggedIn) {
         router.push("/users/login");
       }
     }, []);

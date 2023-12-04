@@ -4,7 +4,7 @@ import { useState } from "react";
 import { createTaskFetchCall } from "@/lib/backend";
 import { useRouter } from "next/navigation";
 import styles from "./page.module.css";
-import logInCheck from "@/components/logInCheck";
+import logInCheck from "@/utils/logInCheck";
 
 function CreateTask() {
   const router = useRouter();

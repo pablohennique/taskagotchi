@@ -7,7 +7,7 @@ import {
 import { useEffect, useState } from "react";
 import { useRouter } from "next/navigation";
 import styles from "./page.module.css";
-import logInCheck from "@/components/logInCheck";
+import logInCheck from "@/utils/logInCheck";
 
 function TaskPage({ params }) {
   const router = useRouter();
