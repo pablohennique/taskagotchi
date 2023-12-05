@@ -1,13 +1,46 @@
 function calculateFoodEarned(difficulty, tasksAssociatedToUser) {
   const maxFood = 50;
+let tasksAssociatedToUserToday
 
-  const numberOfEasyTasks = tasksAssociatedToUser.filter(
+  //Get current day to avoid including tasks that are unavailable today for point calculations
+  const currentDate = new Date()
+  const dayOfWeekIndex = currentDate.getDay();
+  const daysOfWeek = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
+  const dayOfWeek = daysOfWeek[dayOfWeekIndex]
+
+  switch (dayOfWeek) {
+    case 'monday':
+      tasksAssociatedToUserToday = tasksAssociatedToUser.filter(task => task.repeat_monday === true);
+    break;
+    case 'tuesday':
+      tasksAssociatedToUserToday = tasksAssociatedToUser.filter(task => task.repeat_tuesday === true);
+    break;
+    case 'wednesday':
+      tasksAssociatedToUserToday = tasksAssociatedToUser.filter(task => task.repeat_wednesday === true);
+    break;
+    case 'thursday':
+      tasksAssociatedToUserToday = tasksAssociatedToUser.filter(task => task.repeat_thursday === true);
+    break;
+    case 'friday':
+      tasksAssociatedToUserToday = tasksAssociatedToUser.filter(task => task.repeat_friday === true);
+    break;
+    case 'saturday':
+      tasksAssociatedToUserToday = tasksAssociatedToUser.filter(task => task.repeat_saturday === true);
+    break;
+    case 'sunday':
+      tasksAssociatedToUserToday = tasksAssociatedToUser.filter(task => task.repeat_sunday === true);
+    break;
+  }
+
+  // console.log(`today is ${dayOfWeek} and the tasks are: `, tasksAssociatedToUserToday);
+
+  const numberOfEasyTasks = tasksAssociatedToUserToday.filter(
     (task) => task.difficulty === "Easy"
   ).length;
-  const numberOfModerateTasks = tasksAssociatedToUser.filter(
+  const numberOfModerateTasks = tasksAssociatedToUserToday.filter(
     (task) => task.difficulty === "Moderate"
   ).length;
-  const numberOfHardTasks = tasksAssociatedToUser.filter(
+  const numberOfHardTasks = tasksAssociatedToUserToday.filter(
     (task) => task.difficulty === "Hard"
   ).length;
 
@@ -32,10 +65,7 @@ function calculateFoodEarned(difficulty, tasksAssociatedToUser) {
       foodEarned = pointsPerHard;
       break;
   }
-
-  // let roundedFoodEarned = Math.round(foodEarned);
   // console.log("net food" + foodEarned);
-  // console.log("rounded" + roundedFoodEarned);
 
   return Math.round(foodEarned);
 }
