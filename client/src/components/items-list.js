@@ -36,12 +36,15 @@ export default function ItemsList(props) {
       {items.map((item) => (
         <div key={item._id}>
           {urlPath === "/tasks" ? (
-            <input
-              type="checkbox"
-              defaultChecked={item.completed}
-              onChange={() => handleCompleteTask(item)}
-              disabled={disabledItems.includes(item._id)}
-            />
+            <>
+              <input
+                type="checkbox"
+                defaultChecked={item.completed}
+                onChange={() => handleCompleteTask(item)}
+                disabled={disabledItems.includes(item._id)}
+              />
+              <span className={styles.checkmark}></span>
+            </>
           ) : null}
           <Link href={`${urlPath}/${item._id}`}>
             {urlPath === "/tamagotchis" ? (
