@@ -82,6 +82,14 @@ function TamagotchiPage({ params }) {
       <div className={styles.tamagotchiContainer}>
         <div>
           <h1>{updatedName || tamagotchi.name}</h1>
+          <div className={styles.imgContainer}>
+            {/* evolution stage will be showed in the image and will be calculated in Node */}
+            {tamagotchi.alive ? (
+              <img src={tamagotchiImage} alt="Cat Tamagotchi" />
+            ) : (
+              <FaSkull size={64} />
+            )}
+          </div>
           <h3>Breed: {tamagotchi.breed}</h3>
           <h3>Age: {tamagotchi.age}</h3>
           <h3>Hunger: {hungerDescription}</h3>
@@ -98,14 +106,6 @@ function TamagotchiPage({ params }) {
               Available food: {food !== null && food >= 0 ? food : user.food}
             </p>
           </div>
-        </div>
-        <div className={styles.imgContainer}>
-          {/* evolution stage will be showed in the image and will be calculated in Node */}
-          {tamagotchi.alive ? (
-            <img src={tamagotchiImage} alt="Cat Tamagotchi" />
-          ) : (
-            <FaSkull size={64} />
-          )}
         </div>
       </div>
       <EditDeleteButtons

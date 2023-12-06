@@ -1,5 +1,5 @@
 .tamagotchiContainer {
-  display: flex;
+  display: block;
 }
 
 .tamagotchiContainer img {
@@ -10,7 +10,6 @@
 .imgContainer {
   display: flex;
   align-items: center;
-  margin-left: 50px;
 }
 
 .foodBar {
