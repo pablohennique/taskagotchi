@@ -3,18 +3,18 @@
 import Link from "next/link";
 import styles from "./items-list.module.css";
 import { FaSkull } from "react-icons/fa";
-
 import { useState, useEffect } from "react";
 import { updateTaskCompletion } from "@/lib/backend";
 
 export default function ItemsList(props) {
-  const { items, urlPath, initialCheckedItems } = props;
+  //initallyDisabledTasks refers to tasks marked as completed already plus tasks not set for today (monday, tuesday, etc)
+  const { items, urlPath, initallyDisabledTasks } = props;
 
-  const [checkedItems, setCheckedItems] = useState([]);
+  const [disabledItems, setDisabledItems] = useState([]);
 
   useEffect(() => {
-    setCheckedItems(initialCheckedItems);
-  }, [initialCheckedItems]);
+    setDisabledItems(initallyDisabledTasks);
+  }, [initallyDisabledTasks]);
 
   function handleCompleteTask(task) {
     const baseUrl = process.env.NEXT_PUBLIC_API_BASE_PATH;
@@ -22,10 +22,10 @@ export default function ItemsList(props) {
 
     let completed = !task.completed; // Toggle the completion status
 
-    setCheckedItems((prevCheckedItems) =>
-      prevCheckedItems.includes(task._id)
-        ? prevCheckedItems.filter((id) => id !== task._id)
-        : [...prevCheckedItems, task._id]
+    setDisabledItems((prevDisabledItems) =>
+      prevDisabledItems.includes(task._id)
+        ? prevDisabledItems.filter((id) => id !== task._id)
+        : [...prevDisabledItems, task._id]
     );
 
     updateTaskCompletion(url, completed);
@@ -40,7 +40,7 @@ export default function ItemsList(props) {
               type="checkbox"
               defaultChecked={item.completed}
               onChange={() => handleCompleteTask(item)}
-              disabled={checkedItems.includes(item._id)}
+              disabled={disabledItems.includes(item._id)}
             />
           ) : null}
           <Link href={`${urlPath}/${item._id}`}>
