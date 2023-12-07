@@ -1,11 +1,12 @@
 .navMenu ul {
   display: flex;
   gap: 20px;
-  margin: 0;
+  /* margin: 0; */
   text-transform: uppercase;
   /* font-weight: bold; */
   justify-content: center;
   align-items: center;
+  margin-left: -40px;
 }
 
 .navMenu li {

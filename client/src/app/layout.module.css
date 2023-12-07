@@ -7,9 +7,9 @@
 
 .rootLayout > header {
   display: flex;
-  /* justify-content: center; */
+  justify-content: center;
   border-bottom: 0.5px solid lightgray;
-  padding: 12px;
+  /* padding: 12px; */
 }
 
 .rootLayout > main {
