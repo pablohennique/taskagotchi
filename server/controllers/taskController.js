@@ -62,7 +62,7 @@ const createTask = asyncHandler(async (req, res) => {
   res.status(201).json(task);
 });
 
-// @desc Update one task
+// @desc Update one task. This can be editing it or marking it as complete
 // @route PUT /tasks/:id
 // @access private
 const updateTask = asyncHandler(async (req, res) => {
@@ -71,6 +71,9 @@ const updateTask = asyncHandler(async (req, res) => {
 
   let completionStatusBeforeUpdate = task.completed;
   let completionStatusAfterUpdate = req.body.completed;
+
+  //declaring foodEarned to display on the front end for the user when task is marked as completed
+  let foodEarned;
 
   if (!task) {
     res.status(404);
@@ -83,15 +86,17 @@ const updateTask = asyncHandler(async (req, res) => {
   const updatedTask = await Task.findByIdAndUpdate(req.params.id, req.body, {
     new: true,
   });
-  res.status(200).json(updatedTask);
 
+  //If statement ensures that the change in the task status is from not-completed --> completed.
   if (!completionStatusBeforeUpdate && completionStatusAfterUpdate) {
     let userId = task.user_id.toString();
     let difficulty = task.difficulty;
     let tasksAssociatedToUser = await Task.find({ user_id: userId });
 
-    earnFood(userId, difficulty, tasksAssociatedToUser); // passes infomration to User controller
+    foodEarned = await earnFood(userId, difficulty, tasksAssociatedToUser); // passes infomration to User controller
   }
+
+  res.status(200).json({updatedTask: updatedTask, foodEarned: foodEarned});
 });
 
 // @desc Delete one task

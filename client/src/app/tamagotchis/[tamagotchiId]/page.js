@@ -98,8 +98,6 @@ function TamagotchiPage({ params }) {
               params={params}
               tamagotchi={tamagotchi}
               user={user}
-              // hunger={tamagotchi.hunger}
-              // food={user.food}
               onFoodUpdate={onFoodUpdate}
             />
             <p>

@@ -8,28 +8,34 @@ import { updateTaskCompletion } from "@/lib/backend";
 
 export default function ItemsList(props) {
   //initallyDisabledTasks refers to tasks marked as completed already plus tasks not set for today (monday, tuesday, etc)
-  const { items, urlPath, initallyDisabledTasks } = props;
+  const { items, urlPath, initallyDisabledTasks, onTaskCompleted } = props;
 
   const [disabledItems, setDisabledItems] = useState([]);
 
+  //Disable completed tasks + tasks not repeated today as soon as component loads
   useEffect(() => {
     setDisabledItems(initallyDisabledTasks);
   }, [initallyDisabledTasks]);
 
-  function handleCompleteTask(task) {
+  async function handleCompleteTask(task) {
     const baseUrl = process.env.NEXT_PUBLIC_API_BASE_PATH;
     const url = baseUrl + `/tasks/${task._id}`;
 
     let completed = !task.completed; // Toggle the completion status
 
-    setDisabledItems((prevDisabledItems) =>
-      prevDisabledItems.includes(task._id)
-        ? prevDisabledItems.filter((id) => id !== task._id)
-        : [...prevDisabledItems, task._id]
-    );
+    const taskCompletedJsonRes = await updateTaskCompletion(url, completed);
 
-    updateTaskCompletion(url, completed);
+    //Add the latest task completed to the array of disabled tasks
+    setDisabledItems(prevDisabledItems => [...prevDisabledItems, task._id]);
+
+    //Callback function from the tasks psge.js to pass the amount of food earned to display it to the user
+    onTaskCompleted(taskCompletedJsonRes.foodEarned);
   }
+
+  //Solution for a bug that prevented task from disabled after being marked as completed. Caused by onTaskCompleted() within the handleCompleteTask() function
+  useEffect(() => {
+    setDisabledItems(disabledItems)
+  }, [disabledItems])
 
   return (
     <ul className={styles.list}>

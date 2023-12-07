@@ -34,12 +34,7 @@ export function useBackendFetchCall(key, initialValue, url) {
 }
 
 // USER ONLY
-export async function loginRegisterFetchCall({
-  url,
-  username,
-  email,
-  password,
-}) {
+export async function loginRegisterFetchCall({ url, username, email, password }) {
   let requestBody = {};
   let purpose = "";
   let message = "";
@@ -78,8 +73,7 @@ export async function loginRegisterFetchCall({
       console.log("Login successful. Access Token:", data.accessToken);
       return { success: true, message: message };
     } else if (purpose === "registration") {
-      message =
-        "Registration successful. Accaount created with email: " + email;
+      message = "Registration successful. Accaount created with email: " + email;
       return { success: true, message: message };
     }
   } catch (error) {
@@ -111,11 +105,7 @@ export async function updateUserFetchCall({ food }) {
 
     const data = await response.json();
     console.log(data);
-    console.log(
-      "The following username has been successfully updated (with given food):",
-      data.username,
-      data.food
-    );
+    console.log("The following username has been successfully updated (with given food):", data.username, data.food);
   } catch (error) {
     console.log("An error occurred while trying to update user:", error);
   }
@@ -244,10 +234,7 @@ export async function updateRecurrencesFetchCall(
     const data = await response.json();
     console.log("Task recurrences edited: ", data);
   } catch (error) {
-    console.log(
-      "An error occurred while trying to update task recurrences:",
-      error
-    );
+    console.log("An error occurred while trying to update task recurrences:", error);
   }
 }
 
@@ -273,11 +260,9 @@ export async function updateTaskCompletion(url, completed) {
 
     const data = await response.json();
     console.log("Task completion updated: ", data);
+    return data;
   } catch (error) {
-    console.log(
-      "An error occurred while trying to update task completions:",
-      error
-    );
+    console.log("An error occurred while trying to update task completions:", error);
   }
 }
 

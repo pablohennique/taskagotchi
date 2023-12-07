@@ -105,6 +105,8 @@ async function earnFood(userId, difficulty, tasksAssociatedToUser) {
   console.log(
     `user id ${userId} has earned ${foodEarned} food for a ${difficulty} task. The total is now ${user.food}`
   );
+
+  return foodEarned;
 }
 
 module.exports = { registerUser, loginUser, currentUser, updateUser, earnFood };
