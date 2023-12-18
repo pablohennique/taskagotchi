@@ -16,11 +16,7 @@ function TamagotchiPage({ params }) {
 
   const tamagotchiUrlPath = `/tamagotchis/${params.tamagotchiId}`;
   const tamagotchiUrl = baseUrl + tamagotchiUrlPath;
-  const [tamagotchi, setTamagotchi] = useBackendFetchCall(
-    "tamagotchi",
-    [],
-    tamagotchiUrl
-  );
+  const [tamagotchi, setTamagotchi] = useBackendFetchCall("tamagotchi", [], tamagotchiUrl);
 
   const [updatedName, setUpdatedName] = useState(null);
   const [food, setFood] = useState(null);
@@ -51,23 +47,71 @@ function TamagotchiPage({ params }) {
     }
   }
 
-  function setTamagotchiImage(breed) {
+  //sets a random state between awake or asleep for a tamagotchi that persists for one hour
+  function assignTamagotchiState() {
+    let availableStates = ["asleep", "awake"];
+    const randomIndex = Math.floor(Math.random() * availableStates.length);
+    const currentDate = new Date();
+
+    function resetTamagotchiState() {
+      const countdownTime = 60 * 60; //1 hour in seconds
+
+      const storedDate = localStorage.getItem("storedDate");
+      console.log('Stored Date:', storedDate);
+
+      if (!storedDate) {
+        console.log('inside storedDate false');
+        return true;
+      } else {
+        const timeRemaining = countdownTime - (currentDate - new Date(storedDate)) / 1000;
+        console.log('Time Remaining:', timeRemaining);
+        if (timeRemaining < 0) {
+          return true;
+        } else {
+          return false;
+        }
+      }
+    }
+
+    const pickNewRandState = resetTamagotchiState();
+
+    // If a new state is required, the new sate will be stored locally as well as a new date, to trigger the new "1 hour countdown"
+    let stateAssigned
+    if (pickNewRandState) {
+      stateAssigned = availableStates[randomIndex];
+      localStorage.setItem("storedDate", currentDate);
+      localStorage.setItem("state", stateAssigned);
+      return stateAssigned;
+    } else {
+      stateAssigned = localStorage.getItem("state");
+      return stateAssigned
+    }
+  }
+
+  function assignTamagotchiImage(breed) {
+    const state = assignTamagotchiState();
     switch (breed) {
       case "Dragon":
-        tamagotchiImage =
-          "/tamagotchis-images/dragon/baby-dragon-tamagotchi.gif";
+        tamagotchiImage = "/tamagotchis-images/dragon/baby-dragon-tamagotchi.gif";
         break;
       case "Dog":
         tamagotchiImage = "/tamagotchis-images/dog/baby-dog-tamagotchi.gif";
         break;
       case "Cat":
-        tamagotchiImage = "/tamagotchis-images/cat/baby-cat-tamagotchi.gif";
+        switch (state) {
+          case "asleep":
+            tamagotchiImage = "/tamagotchis-images/cat/sleeping-cat-pixel-nobackground-final.gif";
+            break;
+          case "awake":
+            tamagotchiImage = "/tamagotchis-images/cat/cat-walking-pixel-nobackground-final.gif";
+            break;
+        }
         break;
     }
   }
   if (tamagotchi) {
     setHungerDescription();
-    setTamagotchiImage(tamagotchi.breed);
+    assignTamagotchiImage(tamagotchi.breed);
   }
 
   useEffect(() => {
@@ -84,33 +128,18 @@ function TamagotchiPage({ params }) {
           <h1>{updatedName || tamagotchi.name}</h1>
           <div className={styles.imgContainer}>
             {/* evolution stage will be showed in the image and will be calculated in Node */}
-            {tamagotchi.alive ? (
-              <img src={tamagotchiImage} alt="Cat Tamagotchi" />
-            ) : (
-              <FaSkull size={64} />
-            )}
+            {tamagotchi.alive ? <img src={tamagotchiImage} alt="Cat Tamagotchi" /> : <FaSkull size={64} />}
           </div>
           <h3>Breed: {tamagotchi.breed}</h3>
           <h3>Age: {tamagotchi.age}</h3>
           <h3>Hunger: {hungerDescription}</h3>
           <div className={styles.foodBar}>
-            <FeedButton
-              params={params}
-              tamagotchi={tamagotchi}
-              user={user}
-              onFoodUpdate={onFoodUpdate}
-            />
-            <p>
-              Available food: {food !== null && food >= 0 ? food : user.food}
-            </p>
+            <FeedButton params={params} tamagotchi={tamagotchi} user={user} onFoodUpdate={onFoodUpdate} />
+            <p>Available food: {food !== null && food >= 0 ? food : user.food}</p>
           </div>
         </div>
       </div>
-      <EditDeleteButtons
-        tamagotchi={tamagotchi}
-        params={params}
-        onNameUpdate={onNameUpdate}
-      />
+      <EditDeleteButtons tamagotchi={tamagotchi} params={params} onNameUpdate={onNameUpdate} />
     </>
   );
 }

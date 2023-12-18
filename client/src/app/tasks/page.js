@@ -42,7 +42,7 @@ function TasksPage() {
     <>
       <div>
         <h1>My Tasks</h1>
-        <p>{foodEarned}</p>
+        <p>{foodEarned || 'Complete tasks to earn food.'}</p>
       </div>
       <ItemsList
         items={tasks}
