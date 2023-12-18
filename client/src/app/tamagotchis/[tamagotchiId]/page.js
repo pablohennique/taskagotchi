@@ -22,6 +22,7 @@ function TamagotchiPage({ params }) {
   const [food, setFood] = useState(null);
   const [hungerPointsGained, setHungerPointsGained] = useState(0);
   const [feedButtonClicked, setFeedButtonClicked] = useState(false);
+  const [yum, setYum] = useState(false);
 
   let hungerDescription;
   let tamagotchiImage;
@@ -34,6 +35,12 @@ function TamagotchiPage({ params }) {
     localStorage.setItem("state", "awake"); //if tamagotchi is asleep, it will wake up when being fed.
     setFeedButtonClicked(true);
     setFood(updatedFood);
+
+    //Show Yum! image and remove after 2 seconds
+    setYum(true);
+    setTimeout(() => {
+      setYum(false);
+    }, 2000);
   };
 
   function setHungerDescription() {
@@ -59,14 +66,14 @@ function TamagotchiPage({ params }) {
       const countdownTime = 60 * 60; //1 hour in seconds
 
       const storedDate = localStorage.getItem("storedDate");
-      console.log('Stored Date:', storedDate);
+      console.log("Stored Date:", storedDate);
 
       if (!storedDate) {
-        console.log('inside storedDate false');
+        console.log("inside storedDate false");
         return true;
       } else {
+        // timeRemaining is the representation of the 1 hour "timer". It substracts the storedDate in the local memory minus the currentDate (time now) to give us a 1 hour timer
         const timeRemaining = countdownTime - (currentDate - new Date(storedDate)) / 1000;
-        console.log('Time Remaining:', timeRemaining);
         if (timeRemaining < 0) {
           return true;
         } else {
@@ -78,15 +85,16 @@ function TamagotchiPage({ params }) {
     const pickNewRandState = resetTamagotchiState();
 
     // If a new state is required, the new sate will be stored locally as well as a new date, to trigger the new "1 hour countdown"
-    let stateAssigned
+    let stateAssigned;
     if (pickNewRandState) {
       stateAssigned = availableStates[randomIndex];
       localStorage.setItem("storedDate", currentDate);
       localStorage.setItem("state", stateAssigned);
       return stateAssigned;
     } else {
+      //if the timer has not reached zero, the same state as previously stored is used to display the tamagotchi image
       stateAssigned = localStorage.getItem("state");
-      return stateAssigned
+      return stateAssigned;
     }
   }
 
@@ -129,8 +137,13 @@ function TamagotchiPage({ params }) {
         <div>
           <h1>{updatedName || tamagotchi.name}</h1>
           <div className={styles.imgContainer}>
-            {/* evolution stage will be showed in the image and will be calculated in Node */}
-            {tamagotchi.alive ? <img src={tamagotchiImage} alt="Cat Tamagotchi" /> : <FaSkull size={64} />}
+            {yum ? <img src="/action-props/yum-bold.png" alt="yum! tamagotchi eating" className={styles.yum} /> : ""}
+
+            {tamagotchi.alive ? (
+              <img src={tamagotchiImage} alt="Cat Tamagotchi" className={styles.tamagotchiIage} />
+            ) : (
+              <FaSkull size={64} />
+            )}
           </div>
           <h3>Breed: {tamagotchi.breed}</h3>
           <h3>Age: {tamagotchi.age}</h3>

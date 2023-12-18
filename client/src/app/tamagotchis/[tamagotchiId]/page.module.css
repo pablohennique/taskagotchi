@@ -2,7 +2,7 @@
   display: block;
 }
 
-.tamagotchiContainer img {
+.tamagotchiIage {
   margin-left: 50px;
   width: 200px;
 }
@@ -20,4 +20,11 @@
   margin-right: 20px;
   border-radius: 20px;
   width: 80px;
+}
+
+.yum {
+  width: 100px;
+  position: absolute;
+  margin-bottom: 140px;
+  margin-right: 130px;
 }
