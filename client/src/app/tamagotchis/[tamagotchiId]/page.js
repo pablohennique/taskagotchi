@@ -7,6 +7,7 @@ import EditDeleteButtons from "@/components/edit-delete-buttons";
 import FeedButton from "@/components/feed-button";
 import { FaSkull } from "react-icons/fa";
 import logInCheck from "@/utils/logInCheck";
+const delay = (ms) => new Promise((r) => setTimeout(r, ms));
 
 function TamagotchiPage({ params }) {
   const baseUrl = process.env.NEXT_PUBLIC_API_BASE_PATH;
@@ -35,13 +36,29 @@ function TamagotchiPage({ params }) {
     localStorage.setItem("state", "awake"); //if tamagotchi is asleep, it will wake up when being fed.
     setFeedButtonClicked(true);
     setFood(updatedFood);
-
-    //Show Yum! image and remove after 2 seconds
-    setYum(true);
-    setTimeout(() => {
-      setYum(false);
-    }, 2000);
   };
+
+  //Show Yum! image and remove after 2 seconds.
+  //To avoid showing Yum! on first render, trigger useEffect only when value of food changes to something not = null
+  useEffect(() => {
+    if (!food) {
+      return;
+    }
+    let isCurrent = true;
+    setYum(true);
+
+    const throttle = async () => {
+      await delay(2000);
+      if (isCurrent) {
+        setYum(false);
+      }
+    };
+    throttle();
+
+    return () => {
+      isCurrent = false;
+    };
+  }, [food]);
 
   function setHungerDescription() {
     if (tamagotchi.hunger + hungerPointsGained <= 25) {
@@ -66,10 +83,8 @@ function TamagotchiPage({ params }) {
       const countdownTime = 60 * 60; //1 hour in seconds
 
       const storedDate = localStorage.getItem("storedDate");
-      console.log("Stored Date:", storedDate);
 
       if (!storedDate) {
-        console.log("inside storedDate false");
         return true;
       } else {
         // timeRemaining is the representation of the 1 hour "timer". It substracts the storedDate in the local memory minus the currentDate (time now) to give us a 1 hour timer
@@ -138,7 +153,6 @@ function TamagotchiPage({ params }) {
           <h1>{updatedName || tamagotchi.name}</h1>
           <div className={styles.imgContainer}>
             {yum ? <img src="/action-props/yum-bold.png" alt="yum! tamagotchi eating" className={styles.yum} /> : ""}
-
             {tamagotchi.alive ? (
               <img src={tamagotchiImage} alt="Cat Tamagotchi" className={styles.tamagotchiIage} />
             ) : (
