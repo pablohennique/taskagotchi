@@ -31,6 +31,7 @@ function TamagotchiPage({ params }) {
   };
 
   const onFoodUpdate = (updatedFood) => {
+    localStorage.setItem("state", "awake"); //if tamagotchi is asleep, it will wake up when being fed.
     setFeedButtonClicked(true);
     setFood(updatedFood);
   };
@@ -53,6 +54,7 @@ function TamagotchiPage({ params }) {
     const randomIndex = Math.floor(Math.random() * availableStates.length);
     const currentDate = new Date();
 
+    //code that assesses if new tamagotchi state should be determined based on whether the 1 hour timer has elapsed or if there was not timer stored in the local memory
     function resetTamagotchiState() {
       const countdownTime = 60 * 60; //1 hour in seconds
 
