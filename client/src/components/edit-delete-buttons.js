@@ -21,7 +21,7 @@ export default function EditDeleteButtons(props) {
 
   const handleDelete = () => {
     const confirmation = window.confirm(
-      `Are you sure you want to kill ${tamagotchi.name}?`
+      `Are you sure you want to remove ${tamagotchi.name} from your list of Tamagotchis? This cannot be undone.`
     );
     if (confirmation) {
       const url = baseUrl + `/tamagotchis/${params.tamagotchiId}`;
@@ -49,8 +49,8 @@ export default function EditDeleteButtons(props) {
       <button onClick={handleUpdate} disabled={!tamagotchi.alive}>
         CHANGE NAME
       </button>
-      <button onClick={handleDelete} disabled={!tamagotchi.alive}>
-        KILL {tamagotchiNameUppercase}
+      <button onClick={handleDelete} >
+        DELETE {tamagotchiNameUppercase}
       </button>
     </div>
   );
