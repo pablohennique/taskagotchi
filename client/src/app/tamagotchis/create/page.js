@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { createTamagotchiFetchCall } from "@/lib/backend";
 import { useRouter } from "next/navigation";
+import styles from "./page.module.css";
 import logInCheck from "@/utils/logInCheck";
 
 function CreateTamagotchi() {
@@ -31,17 +32,12 @@ function CreateTamagotchi() {
       <form onSubmit={handleSubmit}>
         <div>
           <label htmlFor="name">Name:</label>
-          <input
-            type="name"
-            id="name"
-            value={name}
-            onChange={handleNameChange}
-          />
+          <input type="name" id="name" value={name} onChange={handleNameChange} className={styles.nameSelect} />
         </div>
         <div>
           <label htmlFor="breed">Breed:</label>
-          <select id="breed" value={breed} onChange={handleBreedChange}>
-            <option value="">Select a breeed</option>
+          <select id="breed" value={breed} onChange={handleBreedChange} className={styles.breedSelect}>
+            <option value="">Select breeed</option>
             <option value="Dragon">Dragon</option>
             <option value="Dog">Dog</option>
             <option value="Cat">Cat</option>

@@ -1,0 +1,10 @@
+.nameSelect {
+  font-size: 16px;
+}
+.breedSelect {
+  font-size: 16px;
+}
+
+.breedSelect:focus {
+  font-size: 24px;
+}

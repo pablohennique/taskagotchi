@@ -58,6 +58,7 @@ function CreateTask() {
             value={title}
             onChange={handleTitleChange}
             required={true}
+            className={styles.titleSelect}
           />
         </div>
         <div>
@@ -67,8 +68,9 @@ function CreateTask() {
             value={difficulty}
             onChange={handleDifficultyChange}
             required={true}
+            className={styles.difficultySelect}
           >
-            <option value="">Select a difficulty</option>
+            <option value="">Select difficulty</option>
             <option value="Easy">Easy</option>
             <option value="Moderate">Moderate</option>
             <option value="Hard">Hard</option>
