@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { auth } from "@/utils/auth";
 import { logout } from "@/utils/logout";
 import { useRouter } from "next/navigation";
+import { HiHome } from "react-icons/hi2";
 
 export default function NavMenu() {
   const router = useRouter();
@@ -22,12 +23,10 @@ export default function NavMenu() {
   }, []);
 
   const handleLogout = () => {
-    const confirmation = window.confirm(
-      `Are you sure you want to logout?`
-    );
+    const confirmation = window.confirm(`Are you sure you want to logout?`);
     if (confirmation) {
       logout();
-      router.push('/');
+      router.push("/");
       setIsLoggedIn(false);
     }
   };
@@ -36,7 +35,9 @@ export default function NavMenu() {
     <nav className={styles.navMenu}>
       <ul>
         <li>
-          <Link href="/">Home</Link>
+          <Link href="/">
+              <HiHome size={32} />
+          </Link>
         </li>
         {isLoggedIn && (
           <>

@@ -15,8 +15,8 @@ export default function Home() {
         <p>Also, give them lots of love</p>
       </div>
       <div className="buttonContainer">
-        <Link href="/tamagotchis/create">CREATE TAMAGOTCHI</Link>
-        <Link href="/tasks/create">CREATE DAILY TASK</Link>
+        <Link href="/tamagotchis">YOUR TAMAGOTCHIS</Link>
+        <Link href="/tasks">YOUR TASKS</Link>
       </div>
     </>
   );
