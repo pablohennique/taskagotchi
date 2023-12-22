@@ -30,17 +30,17 @@ function CreateTamagotchi() {
     <>
       <h1>Create a New Tamagotchi</h1>
       <form onSubmit={handleSubmit}>
-        <div>
+        <div className='formLineSpacing'>
           <label htmlFor="name">Name:</label>
           <input type="name" id="name" value={name} onChange={handleNameChange} className={styles.nameSelect} />
         </div>
-        <div>
+        <div className='formLineSpacing'>
           <label htmlFor="breed">Breed:</label>
           <select id="breed" value={breed} onChange={handleBreedChange} className={styles.breedSelect}>
             <option value="">Select breeed</option>
-            <option value="Dragon">Dragon</option>
-            <option value="Dog">Dog</option>
             <option value="Cat">Cat</option>
+            <option value="Dragon">Dragon - beta</option>
+            <option value="Dog">Dog - beta</option>
           </select>
         </div>
         <button type="submit">Create Tamagotchi</button>

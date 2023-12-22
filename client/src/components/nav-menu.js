@@ -45,7 +45,7 @@ export default function NavMenu() {
               <Link href="/tamagotchis">Tamagotchis</Link>
             </li>
             <li>
-              <Link href="/tasks">Taks</Link>
+              <Link href="/tasks">Tasks</Link>
             </li>
             <li>
               <a onClick={handleLogout}>Logout</a>

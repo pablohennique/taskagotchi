@@ -50,7 +50,7 @@ function CreateTask() {
     <>
       <h1>Create a New Task</h1>
       <form onSubmit={handleSubmit}>
-        <div>
+        <div className='formLineSpacing'>
           <label htmlFor="title">Title:</label>
           <input
             type="title"
@@ -61,7 +61,7 @@ function CreateTask() {
             className={styles.titleSelect}
           />
         </div>
-        <div>
+        <div className='formLineSpacing'>
           <label htmlFor="difficulty">Difficulty:</label>
           <select
             id="difficulty"
