@@ -96,6 +96,8 @@ const updateUser = asyncHandler(async (req, res) => {
   res.status(200).json(updatedUser);
 });
 
+// @desc calculate how much food is earned per task completed and update the dbrecord
+// used only internally
 async function earnFood(userId, difficulty, tasksAssociatedToUser) {
   let user = await User.findById(userId);
   let foodEarned = calculateFoodEarned(difficulty, tasksAssociatedToUser);

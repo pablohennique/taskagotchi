@@ -32,10 +32,16 @@ export default function UserLoginPage() {
     if (!response.success) {
       setMessage(response.error + " Please try again.");
     } else if (response.success) {
+      // message for successful login to the user
       setMessage(response.message);
+      // first timout allow the user to read the login message before being redirected
       setTimeout(() => {
         router.push("/tamagotchis");
-      }, 2000);
+        // second timout reloads the entire page so that nav bar can be updated
+        setTimeout(() => {
+          window.location.reload();
+        }, 1000);
+      }, 1000);
     }
   };
 
@@ -48,21 +54,11 @@ export default function UserLoginPage() {
       <form onSubmit={handleSubmit}>
         <div>
           <label htmlFor="email">Email:</label>
-          <input
-            type="email"
-            id="email"
-            value={email}
-            onChange={handleEmailChange}
-          />
+          <input type="email" id="email" value={email} onChange={handleEmailChange} />
         </div>
         <div>
           <label htmlFor="password">Password:</label>
-          <input
-            type="password"
-            id="password"
-            value={password}
-            onChange={handlePasswordChange}
-          />
+          <input type="password" id="password" value={password} onChange={handlePasswordChange} />
         </div>
         <button type="submit">Login</button>
       </form>

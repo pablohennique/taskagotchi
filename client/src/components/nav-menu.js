@@ -4,8 +4,11 @@ import Link from "next/link";
 import styles from "@/components/nav-menu.module.css";
 import { useEffect, useState } from "react";
 import { auth } from "@/utils/auth";
+import { logout } from "@/utils/logout";
+import { useRouter } from "next/navigation";
 
 export default function NavMenu() {
+  const router = useRouter();
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   // useEffect and useState used to make sure getLocalStorage is being called after component has gone through initial render in Vercel
@@ -13,11 +16,21 @@ export default function NavMenu() {
     const checkAuth = () => {
       const getLocalStorage = auth();
       setIsLoggedIn(getLocalStorage);
-      console.log("is logged in?", isLoggedIn);
     };
 
     checkAuth();
   }, []);
+
+  const handleLogout = () => {
+    const confirmation = window.confirm(
+      `Are you sure you want to logout?`
+    );
+    if (confirmation) {
+      logout();
+      router.push('/');
+      setIsLoggedIn(false);
+    }
+  };
 
   return (
     <nav className={styles.navMenu}>
@@ -32,6 +45,9 @@ export default function NavMenu() {
             </li>
             <li>
               <Link href="/tasks">Taks</Link>
+            </li>
+            <li>
+              <a onClick={handleLogout}>Logout</a>
             </li>
           </>
         )}
