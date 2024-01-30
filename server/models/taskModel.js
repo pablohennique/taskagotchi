@@ -16,6 +16,9 @@ const taskSchema = mongoose.Schema(
       enum: ["Easy", "Moderate", "Hard"],
       required: [true, "Please select a difficulty for your Task"],
     },
+    notes: {
+      type: String,
+    },
     repeat_monday: {
       type: Boolean,
       default: false,

@@ -10,6 +10,7 @@ function CreateTask() {
   const router = useRouter();
   const [title, setTitle] = useState("");
   const [difficulty, setDifficulty] = useState("");
+  const [notes, setNotes] = useState("");
 
   const [mondayCheck, setMondayCheck] = useState(true);
   const [tuesdayCheck, setTuesdayCheck] = useState(true);
@@ -27,6 +28,10 @@ function CreateTask() {
     setDifficulty(event.target.value);
   };
 
+  const handleNotesChange = (event) => {
+    setNotes(event.target.value);
+  };
+
   const handleSubmit = (event) => {
     event.preventDefault();
     const baseUrl = process.env.NEXT_PUBLIC_API_BASE_PATH;
@@ -35,6 +40,7 @@ function CreateTask() {
       url,
       title,
       difficulty,
+      notes,
       mondayCheck,
       tuesdayCheck,
       wednesdayCheck,
@@ -75,6 +81,15 @@ function CreateTask() {
             <option value="Moderate">Moderate</option>
             <option value="Hard">Hard</option>
           </select>
+        </div>
+        <div className='formLineSpacing'>
+          <label htmlFor="notes">Notes:</label>
+          <input
+            type="notes"
+            id="notes"
+            value={notes}
+            onChange={handleNotesChange}
+          />
         </div>
 
         <h4>Recurrence:</h4>

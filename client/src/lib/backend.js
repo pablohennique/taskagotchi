@@ -270,6 +270,7 @@ export async function createTaskFetchCall(
   url,
   title,
   difficulty,
+  notes,
   repeat_monday,
   repeat_tuesday,
   repeat_wednesday,
@@ -281,6 +282,7 @@ export async function createTaskFetchCall(
   const requestBody = JSON.stringify({
     title,
     difficulty,
+    notes,
     repeat_monday,
     repeat_tuesday,
     repeat_wednesday,

@@ -35,6 +35,7 @@ const createTask = asyncHandler(async (req, res) => {
   const {
     title,
     difficulty,
+    notes,
     repeat_monday,
     repeat_tuesday,
     repeat_wednesday,
@@ -51,6 +52,7 @@ const createTask = asyncHandler(async (req, res) => {
     user_id: req.user.id,
     title,
     difficulty,
+    notes,
     repeat_monday,
     repeat_tuesday,
     repeat_wednesday,
