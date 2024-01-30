@@ -15,3 +15,9 @@
 .difficultySelect:focus {
   font-size: 26px;
 }
+
+.notesSelect {
+  width: 100%; /* Set the width to 100% to take up the entire available space */
+  min-height: 100px; /* Set a minimum height to make it visible as a block */
+  resize: vertical; /* Allow vertical resizing if needed */
+}

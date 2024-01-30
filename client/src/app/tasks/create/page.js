@@ -84,11 +84,11 @@ function CreateTask() {
         </div>
         <div className='formLineSpacing'>
           <label htmlFor="notes">Notes:</label>
-          <input
-            type="notes"
+          <textarea
             id="notes"
             value={notes}
             onChange={handleNotesChange}
+            className={styles.notesSelect}
           />
         </div>
 

@@ -69,8 +69,8 @@ function TaskPage({ params }) {
       <div>
         <h1>{task.title}</h1>
         <h3>Difficulty: {task.difficulty}</h3>
-        <h3>Notes: {task.notes}</h3>
-        {/* Need to add writing space block */}
+        <h3>Notes:</h3>
+        <p>{task.notes}</p>
         <h3>Recurrence:</h3>
         <form
           method="post"
