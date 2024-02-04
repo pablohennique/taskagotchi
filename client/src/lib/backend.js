@@ -195,8 +195,9 @@ export async function updateFetchCall({ url, name, hunger }) {
 }
 
 // TASKS ONLY
-export async function updateRecurrencesFetchCall(
+export async function updateTaskFetchCall(
   url,
+  notes,
   repeat_monday,
   repeat_tuesday,
   repeat_wednesday,
@@ -206,6 +207,7 @@ export async function updateRecurrencesFetchCall(
   repeat_sunday
 ) {
   const requestBody = JSON.stringify({
+    notes,
     repeat_monday,
     repeat_tuesday,
     repeat_wednesday,

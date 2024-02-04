@@ -1,7 +1,7 @@
 "use client";
 import {
   useBackendFetchCall,
-  updateRecurrencesFetchCall,
+  updateTaskFetchCall,
   deleteFetchCall,
 } from "@/lib/backend";
 import { useEffect, useState } from "react";
@@ -16,6 +16,7 @@ function TaskPage({ params }) {
   const url = baseUrl + `${urlPath}/${params.taskId}`;
 
   const [task, setTask] = useBackendFetchCall("task", [], url);
+  const [notes, setNotes] = useState(task.notes);
   const [mondayCheck, setMondayCheck] = useState(false);
   const [tuesdayCheck, setTuesdayCheck] = useState(false);
   const [wednesdayCheck, setWednesdayCheck] = useState(false);
@@ -24,8 +25,13 @@ function TaskPage({ params }) {
   const [saturdayCheck, setSaturdayCheck] = useState(false);
   const [sundayCheck, setSundayCheck] = useState(false);
 
+  const handleNotesChange = (event) => {
+    setNotes(event.target.value);
+  };
+
   useEffect(() => {
     if (task) {
+      setNotes(task.notes)
       setMondayCheck(task.repeat_monday);
       setTuesdayCheck(task.repeat_tuesday);
       setWednesdayCheck(task.repeat_wednesday);
@@ -40,8 +46,9 @@ function TaskPage({ params }) {
     e.preventDefault();
     const baseUrl = process.env.NEXT_PUBLIC_API_BASE_PATH;
     const url = baseUrl + `/tasks/${task._id}`;
-    updateRecurrencesFetchCall(
+    updateTaskFetchCall(
       url,
+      notes,
       mondayCheck,
       tuesdayCheck,
       wednesdayCheck,
@@ -69,14 +76,20 @@ function TaskPage({ params }) {
       <div>
         <h1>{task.title}</h1>
         <h3>Difficulty: {task.difficulty}</h3>
-        <h3>Notes:</h3>
-        <p>{task.notes}</p>
-        <h3>Recurrence:</h3>
         <form
           method="post"
           onSubmit={handleSubmit}
-          className={styles.recurrencesForm}
-        >
+          className={styles.recurrencesForm}>
+          <div>
+          <h3>Notes:</h3>
+          <textarea
+            value={notes}
+            onChange={handleNotesChange}
+            rows={6} // You can adjust the number of rows to control the initial size
+            cols={40} // You can adjust the number of columns to control the initial size
+          />
+          </div>
+          <h3>Recurrence:</h3>
           <label>
             Monday:
             <input
