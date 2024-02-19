@@ -146,7 +146,12 @@ function TaskPage({ params }) {
               onChange={(e) => setSundayCheck(e.target.checked)}
             />
           </label>
-          <button type="submit">Save</button>
+          <div className={styles.saveButtonContainer}>
+            <button
+              className={styles.saveButton}
+              type="submit">Save</button>
+          </div>
+
         </form>
       </div>
       <div className="buttonContainer">
