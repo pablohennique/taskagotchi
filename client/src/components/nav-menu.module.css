@@ -1,3 +1,11 @@
+.navMenu {
+  position: fixed;
+  top: 0;
+  background-color: white;
+  width: 100%;
+  border-bottom: 0.5px solid lightgray;
+}
+
 .navMenu ul {
   display: flex;
   gap: 20px;

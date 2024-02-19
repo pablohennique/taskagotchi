@@ -8,12 +8,12 @@
 .rootLayout > header {
   display: flex;
   justify-content: center;
-  border-bottom: 0.5px solid lightgray;
+  /* border-bottom: 0.5px solid lightgray; */
   /* padding: 12px; */
 }
 
 .rootLayout > main {
-  padding: 0px 30px;
+  padding: 70px 30px;
   flex: 1;
   background-color: #f8fafc;
 }
