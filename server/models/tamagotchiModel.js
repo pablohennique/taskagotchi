@@ -24,19 +24,15 @@ const tamagotchiSchema = mongoose.Schema(
       type: Number,
       default: 25,
     },
-    evolution_level: {
-      type: Number,
-      default: 1,
-    },
     stage: {
       type: String,
       enum: ["Baby", "Child", "Teenager", "Adult"],
       default: "Baby",
       required: true,
     },
-    alive: {
-      type: Boolean,
-      default: true,
+    minAgeForNextStage: {
+      type: Number,
+      default: 0,
     },
   },
   {

@@ -123,15 +123,17 @@ const tamagotchisGetHungrier = async () => {
 // @desc: function that moves tamagotchis onto their next life stage based on their age and a chance factor
 // The closer they are to a mulltiple of 10 days of life, the higher the chance they will evolve
 const tamagotchisStageEvolution = async () => {
+  console.log('Tamagotchi evolution function RUNNING');
   try {
     const tamagotchis = await Tamagotchi.find({ alive: true });
 
     for (const tamagotchi of tamagotchis) {
-      const ageModulo = (tamagotchi.age / 10) % 1;
+      const ageModuloNotRounded = (tamagotchi.age / 10) % 1; //Turn age into a module from 0 to .9
+      const ageModulo = parseFloat(ageModuloNotRounded.toFixed(1)); //rounding to 1 decimal point due to floating-point precision in JavaScript yielding results like .3999999
       let willStageEvolve = false;
       let newStage = "";
 
-      if (ageModulo < 0.6){
+      if (ageModulo < 0.6 || tamagotchi.stage === 'Adult' || tamagotchi.age <= tamagotchi.minAgeForNextStage){
         continue;
       }
 
@@ -159,7 +161,10 @@ const tamagotchisStageEvolution = async () => {
         }
 
         tamagotchi.stage = newStage;
+        tamagotchi.minAgeForNextStage = tamagotchi.age + 5 //Adding 5 since +5 ensures that no matter when the last evolution took place, min age will always be less than .6 but more than .0
         await tamagotchi.save();
+
+        console.log(`Tamagothi ${tamagotchi.name} evolved to ${newStage}`);
       }
     }
   } catch (error) {
