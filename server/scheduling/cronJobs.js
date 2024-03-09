@@ -4,6 +4,7 @@ const { resetCompletedTasks } = require("../controllers/taskController");
 const {
   tamagotchisAgeOneDay,
   tamagotchisGetHungrier,
+  tamagotchisStageEvolution
 } = require("../controllers/tamagotchiController");
 
 // @desc All tasks are reset at 3 am EST every day
@@ -42,8 +43,21 @@ const tamagotchisGetHungrierCronJob = cron.schedule(
   }
 );
 
+// @desc function that runs at 3 am to evolve applicable tamagotchis onto the next stage
+const tamagotchisStageEvolutionCronJob = cron.schedule(
+  "0 3 * * *",
+  () => {
+    tamagotchisStageEvolution();
+  },
+  {
+    scheduled: false,
+    timezone: "America/New_York",
+  }
+);
+
 module.exports = {
   taskCompletionResetCronJob,
   tamagotchisAgeCronJob,
   tamagotchisGetHungrierCronJob,
+  tamagotchisStageEvolutionCronJob
 };

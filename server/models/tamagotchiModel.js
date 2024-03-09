@@ -14,10 +14,7 @@ const tamagotchiSchema = mongoose.Schema(
     breed: {
       type: String,
       enum: ["Dragon", "Cat", "Dog"],
-      required: [
-        true,
-        "Please choose a breed of Tamagotchi - Dragon, Dog, Cat",
-      ],
+      required: [true, "Please choose a breed of Tamagotchi - Dragon, Dog, Cat"],
     },
     age: {
       type: Number,
@@ -30,6 +27,12 @@ const tamagotchiSchema = mongoose.Schema(
     evolution_level: {
       type: Number,
       default: 1,
+    },
+    stage: {
+      type: String,
+      enum: ["Baby", "Child", "Teenager", "Adult"],
+      default: "Baby",
+      required: true,
     },
     alive: {
       type: Boolean,

@@ -59,11 +59,7 @@ const updateTamagotchi = asyncHandler(async (req, res) => {
     res.status(403);
     throw new Error("User is not the owner of this Tamagotchi");
   }
-  const updatedTamagotchi = await Tamagotchi.findByIdAndUpdate(
-    req.params.id,
-    req.body,
-    { new: true }
-  );
+  const updatedTamagotchi = await Tamagotchi.findByIdAndUpdate(req.params.id, req.body, { new: true });
   res.status(200).json(updatedTamagotchi);
 });
 
@@ -124,6 +120,53 @@ const tamagotchisGetHungrier = async () => {
   }
 };
 
+// @desc: function that moves tamagotchis onto their next life stage based on their age and a chance factor
+// The closer they are to a mulltiple of 10 days of life, the higher the chance they will evolve
+const tamagotchisStageEvolution = async () => {
+  try {
+    const tamagotchis = await Tamagotchi.find({ alive: true });
+
+    for (const tamagotchi of tamagotchis) {
+      const ageModulo = (tamagotchi.age / 10) % 1;
+      let willStageEvolve = false;
+      let newStage = "";
+
+      if (ageModulo < 0.6){
+        continue;
+      }
+
+      if (
+        ageModulo === 0 ||
+        (ageModulo === 0.9 && Math.random() < 0.4) ||
+        (ageModulo === 0.8 && Math.random() < 0.3) ||
+        (ageModulo === 0.7 && Math.random() < 0.2) ||
+        (ageModulo === 0.6 && Math.random() < 0.1)
+      ) {
+        willStageEvolve = true;
+      }
+
+      if (willStageEvolve === true) {
+        switch (tamagotchi.stage) {
+          case "Baby":
+            newStage = "Child";
+            break;
+          case "Child":
+            newStage = "Teenager";
+            break;
+          case "Teenager":
+            newStage = "Adult";
+            break;
+        }
+
+        tamagotchi.stage = newStage;
+        await tamagotchi.save();
+      }
+    }
+  } catch (error) {
+    console.error(new Date(), "Error calculating new life stage for tamagotchis", error);
+  }
+};
+
 module.exports = {
   getTamagotchis,
   getTamagotchi,
@@ -132,4 +175,5 @@ module.exports = {
   deleteTamagotchi,
   tamagotchisAgeOneDay,
   tamagotchisGetHungrier,
+  tamagotchisStageEvolution
 };

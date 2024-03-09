@@ -6,6 +6,7 @@ const {
   taskCompletionResetCronJob,
   tamagotchisAgeCronJob,
   tamagotchisGetHungrierCronJob,
+  tamagotchisStageEvolutionCronJob
 } = require("./scheduling/cronJobs");
 const dotenv = require("dotenv").config();
 
@@ -30,3 +31,4 @@ app.listen(port, () => {
 taskCompletionResetCronJob.start();
 tamagotchisAgeCronJob.start();
 tamagotchisGetHungrierCronJob.start();
+tamagotchisStageEvolutionCronJob.start();

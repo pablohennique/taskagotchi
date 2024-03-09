@@ -161,6 +161,7 @@ function TamagotchiPage({ params }) {
           </div>
           <h3>Breed: {tamagotchi.breed}</h3>
           <h3>Age: {tamagotchi.age}</h3>
+          <h3>Life Stage: {tamagotchi.stage}</h3>
           <h3>Hunger: {hungerDescription}</h3>
           <div className={styles.foodBar}>
             <FeedButton params={params} tamagotchi={tamagotchi} user={user} onFoodUpdate={onFoodUpdate} />
