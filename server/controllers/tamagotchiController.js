@@ -1,5 +1,7 @@
 const asyncHandler = require("express-async-handler");
 const Tamagotchi = require("../models/tamagotchiModel");
+const { evolveCalculationAndSave } = require("../services/calculations");
+
 
 // @desc Get all tamagotchis associated to req.user
 // @route GET /tamagotchis
@@ -130,41 +132,25 @@ const tamagotchisStageEvolution = async () => {
     for (const tamagotchi of tamagotchis) {
       const ageModuloNotRounded = (tamagotchi.age / 10) % 1; //Turn age into a module from 0 to .9
       const ageModulo = parseFloat(ageModuloNotRounded.toFixed(1)); //rounding to 1 decimal point due to floating-point precision in JavaScript yielding results like .3999999
-      let willStageEvolve = false;
-      let newStage = "";
 
-      if (ageModulo < 0.6 || tamagotchi.stage === 'Adult' || tamagotchi.age <= tamagotchi.minAgeForNextStage){
+      if (ageModulo === 0 && tamagotchi.stage != 'Adult' && tamagotchi.age > tamagotchi.minAgeForNextStage) {
+        evolveCalculationAndSave(tamagotchi);
+        continue;
+      } else if (ageModulo < 0.6 || tamagotchi.stage === 'Adult' || tamagotchi.age <= tamagotchi.minAgeForNextStage){
         continue;
       }
 
+      // If module is between .6 and .9, chance will play a role
+      const chance = Math.random()
+      console.log("chance : " + chance)
+
       if (
-        ageModulo === 0 ||
-        (ageModulo === 0.9 && Math.random() < 0.4) ||
-        (ageModulo === 0.8 && Math.random() < 0.3) ||
-        (ageModulo === 0.7 && Math.random() < 0.2) ||
-        (ageModulo === 0.6 && Math.random() < 0.1)
+        (ageModulo === 0.9 && chance < 0.5) ||
+        (ageModulo === 0.8 && chance < 0.4) ||
+        (ageModulo === 0.7 && chance < 0.3) ||
+        (ageModulo === 0.6 && chance < 0.2)
       ) {
-        willStageEvolve = true;
-      }
-
-      if (willStageEvolve === true) {
-        switch (tamagotchi.stage) {
-          case "Baby":
-            newStage = "Child";
-            break;
-          case "Child":
-            newStage = "Teenager";
-            break;
-          case "Teenager":
-            newStage = "Adult";
-            break;
-        }
-
-        tamagotchi.stage = newStage;
-        tamagotchi.minAgeForNextStage = tamagotchi.age + 5 //Adding 5 since +5 ensures that no matter when the last evolution took place, min age will always be less than .6 but more than .0
-        await tamagotchi.save();
-
-        console.log(`Tamagothi ${tamagotchi.name} evolved to ${newStage}`);
+        evolveCalculationAndSave(tamagotchi);
       }
     }
   } catch (error) {

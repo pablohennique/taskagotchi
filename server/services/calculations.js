@@ -70,6 +70,29 @@ let tasksAssociatedToUserToday
   return Math.round(foodEarned);
 }
 
+async function evolveCalculationAndSave(tamagotchi) {
+  let newStage = "";
+
+  switch (tamagotchi.stage) {
+    case "Baby":
+      newStage = "Child";
+      break;
+    case "Child":
+      newStage = "Teenager";
+      break;
+    case "Teenager":
+      newStage = "Adult";
+      break;
+  }
+
+  tamagotchi.stage = newStage;
+  tamagotchi.minAgeForNextStage = tamagotchi.age + 5 //Adding 5 since +5 ensures that no matter when the last evolution took place, min age will always be less than .6 but more than .0
+  await tamagotchi.save();
+
+  console.log(`Tamagothi ${tamagotchi.name} evolved to ${newStage}`);
+}
+
 module.exports = {
   calculateFoodEarned,
+  evolveCalculationAndSave
 };
