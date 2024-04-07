@@ -57,8 +57,7 @@ function TaskPage({ params }) {
       saturdayCheck,
       sundayCheck
     );
-    // add a pop up that confirms save successful
-    window.alert("Task has been saved successfully!");
+    router.push("/tasks")
   }
 
   function handleDelete() {
