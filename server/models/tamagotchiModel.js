@@ -30,6 +30,10 @@ const tamagotchiSchema = mongoose.Schema(
       default: "Baby",
       required: true,
     },
+    alive: {
+      type: Boolean,
+      default: true,
+    },
     minAgeForNextStage: {
       type: Number,
       default: 0,

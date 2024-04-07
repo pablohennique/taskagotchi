@@ -43,9 +43,9 @@ const tamagotchisGetHungrierCronJob = cron.schedule(
   }
 );
 
-// @desc function that runs at 3 am to evolve applicable tamagotchis onto the next stage
+// @desc function that runs at 2 am to evolve applicable tamagotchis onto the next stage
 const tamagotchisStageEvolutionCronJob = cron.schedule(
-  "* * * * *",
+  "0 2 * * *",
   () => {
     tamagotchisStageEvolution();
   },
