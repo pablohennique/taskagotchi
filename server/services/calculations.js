@@ -5,7 +5,6 @@ let tasksAssociatedToUserToday
   //Get current day to avoid including tasks that are unavailable today for point calculations
   const currentDate = new Date()
   const dayOfWeekIndex = currentDate.getDay();
-  console.log('dayOfWeekIndex :' + dayOfWeekIndex)
   const daysOfWeek = ['sunday', 'monday', 'tuesday', 'wednesday', 'thursday', 'friday', 'saturday'];
   const dayOfWeek = daysOfWeek[dayOfWeekIndex]
 
