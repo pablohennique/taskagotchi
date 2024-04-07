@@ -82,6 +82,7 @@ function TaskPage({ params }) {
           <div>
           <h3>Notes:</h3>
           <textarea
+            className={styles.textarea}
             value={notes}
             onChange={handleNotesChange}
             rows={6} // You can adjust the number of rows to control the initial size
